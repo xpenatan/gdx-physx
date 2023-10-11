@@ -15,7 +15,7 @@ dependencies {
 tasks.register<JavaExec>("run_basic_desktop") {
     dependsOn("classes")
     group = "examples-desktop"
-    description = "Run bullet example"
+    description = "Run physx example"
     mainClass.set(mainClassName)
     classpath = sourceSets["main"].runtimeClasspath
     workingDir = assetsDir

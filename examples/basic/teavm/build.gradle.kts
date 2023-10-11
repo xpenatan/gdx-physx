@@ -16,7 +16,7 @@ dependencies {
     implementation(project(":physx:teavm"))
 }
 
-tasks.register<JavaExec>("buildExampleBullet") {
+tasks.register<JavaExec>("buildExample") {
     dependsOn("classes")
     group = "teavm"
     description = "Build Bullet example"
@@ -29,10 +29,10 @@ tasks.register("run_basic_teavm") {
     description = "Run Bullet example"
     val list = arrayOf(
         "clean",
-        "buildExampleBullet",
+        "buildExample",
         "jettyRun"
     )
     dependsOn(list)
-    tasks.findByName("buildExampleBullet")?.mustRunAfter("clean")
-    tasks.findByName("jettyRun")?.mustRunAfter("buildExampleBullet")
+    tasks.findByName("buildExample")?.mustRunAfter("clean")
+    tasks.findByName("jettyRun")?.mustRunAfter("buildExample")
 }
