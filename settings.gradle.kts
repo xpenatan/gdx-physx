@@ -5,9 +5,9 @@ include(":physx:teavm")
 include(":physx:desktop")
 //include(":physx:android")
 
-//include(":examples:basic:core")
-//include(":examples:basic:desktop")
-//include(":examples:basic:teavm")
+include(":examples:basic:core")
+include(":examples:basic:desktop")
+include(":examples:basic:teavm")
 //include(":examples:basic:android")
 
 //includeBuild("E:\\Dev\\Projects\\java\\gdx-teavm") {
