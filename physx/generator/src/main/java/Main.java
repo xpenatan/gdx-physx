@@ -3,6 +3,7 @@ import com.github.xpenatan.jparser.builder.BuildMultiTarget;
 import com.github.xpenatan.jparser.builder.BuildTarget;
 import com.github.xpenatan.jparser.builder.JBuilder;
 import com.github.xpenatan.jparser.builder.targets.AndroidTarget;
+import com.github.xpenatan.jparser.builder.targets.EmscriptenLibTarget;
 import com.github.xpenatan.jparser.builder.targets.EmscriptenTarget;
 import com.github.xpenatan.jparser.builder.targets.WindowsMSVSTarget;
 import com.github.xpenatan.jparser.core.JParser;
@@ -79,8 +80,8 @@ public class Main {
 
         JBuilder.build(
                 buildConfig,
-                getWindowBuildTarget()
-//                getEmscriptenBuildTarget(idlPath)
+//                getWindowBuildTarget()
+                getEmscriptenBuildTarget(idlPath)
 //                getAndroidBuildTarget()
         );
     }
@@ -96,13 +97,11 @@ public class Main {
         foundationTarget.libName = "foundation";
         foundationTarget.libSuffix = "64.lib";
         addIncludes(foundationTarget);
-        foundationTarget.headerDirs.add("-Isrc/physx/include");
-        foundationTarget.headerDirs.add("-Isrc/physx/source/foundation/include");
         foundationTarget.cppFlags.add("-D");
         foundationTarget.cppFlags.add("PhysXFoundation_EXPORTS");
         foundationTarget.cppIncludes.add("**/src/physx/source/foundation/*.cpp");
         foundationTarget.cppIncludes.add("**/src/physx/source/foundation/windows/*.cpp");
-//        multiTarget.add(foundationTarget);
+        multiTarget.add(foundationTarget);
 
         // TARGET COMMON
 
@@ -116,8 +115,8 @@ public class Main {
         commonTarget.cppIncludes.add("**/src/physx/source/common/src/windows/*.cpp");
         commonTarget.cppFlags.add("-D");
         commonTarget.cppFlags.add("PhysXCommon_EXPORTS");
-        commonTarget.linkerFlags.add("../../libs/foundation64.lib");
-//        multiTarget.add(commonTarget);
+        commonTarget.linkerFlags.add("../../libs/windows/foundation64.lib");
+        multiTarget.add(commonTarget);
 
         // TARGET LOWLEVEL
 
@@ -130,7 +129,7 @@ public class Main {
         lowLevelTarget.cppIncludes.add("**/src/physx/source/lowlevel/software/src/**.cpp");
         lowLevelTarget.cppIncludes.add("**/src/physx/source/lowlevel/common/src/**.cpp");
         lowLevelTarget.cppIncludes.add("**/src/physx/source/lowlevel/software/src/**.cpp");
-//        multiTarget.add(lowLevelTarget);
+        multiTarget.add(lowLevelTarget);
 
         // TARGET LOWLEVELAABB
 
@@ -141,7 +140,7 @@ public class Main {
         lowLevelAABBTarget.libSuffix = "64.lib";
         addIncludes(lowLevelAABBTarget);
         lowLevelAABBTarget.cppIncludes.add("**/src/physx/source/lowlevelaabb/src/**.cpp");
-//        multiTarget.add(lowLevelAABBTarget);
+        multiTarget.add(lowLevelAABBTarget);
 
         // TARGET LOWLEVELDYNAMICS
 
@@ -152,7 +151,7 @@ public class Main {
         lowLevelDynamicsTarget.libSuffix = "64.lib";
         addIncludes(lowLevelDynamicsTarget);
         lowLevelDynamicsTarget.cppIncludes.add("**/src/physx/source/lowleveldynamics/src/**.cpp");
-//        multiTarget.add(lowLevelDynamicsTarget);
+        multiTarget.add(lowLevelDynamicsTarget);
 
         // TARGET SCENEQUERY
 
@@ -163,7 +162,7 @@ public class Main {
         sceneQueryTarget.libSuffix = "64.lib";
         addIncludes(sceneQueryTarget);
         sceneQueryTarget.cppIncludes.add("**/src/physx/source/scenequery/src/**.cpp");
-//        multiTarget.add(sceneQueryTarget);
+        multiTarget.add(sceneQueryTarget);
 
         // TARGET SIMULATIONCONTROLLER
 
@@ -174,7 +173,7 @@ public class Main {
         simulationControllerTarget.libSuffix = "64.lib";
         addIncludes(simulationControllerTarget);
         simulationControllerTarget.cppIncludes.add("**/src/physx/source/simulationcontroller/src/**.cpp");
-//        multiTarget.add(simulationControllerTarget);
+        multiTarget.add(simulationControllerTarget);
 
         // TARGET PHYSXPVDSDK
 
@@ -185,7 +184,7 @@ public class Main {
         physXPvdSDKTarget.libSuffix = "64.lib";
         addIncludes(physXPvdSDKTarget);
         physXPvdSDKTarget.cppIncludes.add("**/src/physx/source/pvd/src/**.cpp");
-//        multiTarget.add(physXPvdSDKTarget);
+        multiTarget.add(physXPvdSDKTarget);
 
         // TARGET PHYSX
 
@@ -200,33 +199,25 @@ public class Main {
         physxTarget.cppIncludes.add("**/src/physx/source/physx/src/omnipvd/**.cpp");
         physxTarget.cppIncludes.add("**/src/physx/source/physx/src/gpu/**.cpp");
         physxTarget.cppIncludes.add("**/src/physx/source/physx/src/device/windows/**.cpp");
-        commonTarget.linkerFlags.add("../../libs/common64.lib");
-        commonTarget.linkerFlags.add("../../libs/foundation64.lib");
-        commonTarget.linkerFlags.add("../../libs/lowlevel64.lib");
-        commonTarget.linkerFlags.add("../../libs/lowlevelAABB64.lib");
-        commonTarget.linkerFlags.add("../../libs/lowlevelDynamics64.lib");
-        commonTarget.linkerFlags.add("../../libs/pvd64.lib");
-        commonTarget.linkerFlags.add("../../libs/scenequery64.lib");
-        commonTarget.linkerFlags.add("../../libs/simulationcontroller64.lib");
-//        multiTarget.add(physxTarget);
+        multiTarget.add(physxTarget);
 
         WindowsMSVSTarget glueTarget = new WindowsMSVSTarget();
         addIncludes(glueTarget);
         glueTarget.linkerFlags.add("-DLL");
-        glueTarget.linkerFlags.add("../../libs/common64.lib");
-        glueTarget.linkerFlags.add("../../libs/foundation64.lib");
-        glueTarget.linkerFlags.add("../../libs/lowlevel64.lib");
-        glueTarget.linkerFlags.add("../../libs/lowlevelAABB64.lib");
-        glueTarget.linkerFlags.add("../../libs/lowlevelDynamics64.lib");
-        glueTarget.linkerFlags.add("../../libs/pvd64.lib");
-        glueTarget.linkerFlags.add("../../libs/scenequery64.lib");
-        glueTarget.linkerFlags.add("../../libs/simulationcontroller64.lib");
+        glueTarget.linkerFlags.add("../../libs/windows/common64.lib");
+        glueTarget.linkerFlags.add("../../libs/windows/foundation64.lib");
+        glueTarget.linkerFlags.add("../../libs/windows/lowlevel64.lib");
+        glueTarget.linkerFlags.add("../../libs/windows/lowlevelAABB64.lib");
+        glueTarget.linkerFlags.add("../../libs/windows/lowlevelDynamics64.lib");
+        glueTarget.linkerFlags.add("../../libs/windows/pvd64.lib");
+        glueTarget.linkerFlags.add("../../libs/windows/scenequery64.lib");
+        glueTarget.linkerFlags.add("../../libs/windows/simulationcontroller64.lib");
         multiTarget.add(glueTarget);
 
         return multiTarget;
     }
 
-    private static void addIncludes(BuildTarget target) {
+    public static void addIncludeDirs(BuildTarget target) {
         target.headerDirs.add("-Isrc/physx/include");
         target.headerDirs.add("-Isrc/physx/source/common/include");
         target.headerDirs.add("-Isrc/physx/source/common/src");
@@ -264,7 +255,9 @@ public class Main {
         target.headerDirs.add("-Isrc/physx/source/filebuf/include");
         target.headerDirs.add("-Isrc/physx/pvdruntime/include");
         target.headerDirs.add("-Isrc/physx/source/foundation/include");
+    }
 
+    private static void addFlags(BuildTarget target) {
         target.cppFlags.add("-D");
         target.cppFlags.add("_DEBUG");
         target.cppFlags.add("-D");
@@ -287,6 +280,11 @@ public class Main {
         target.cppFlags.add("_CRT_NONSTDC_NO_DEPRECATE");
         target.cppFlags.add("-D");
         target.cppFlags.add("_WINSOCK_DEPRECATED_NO_WARNINGS");
+    }
+
+    private static void addIncludes(BuildTarget target) {
+        addIncludeDirs(target);
+        addFlags(target);
         target.cppFlags.add("/wd 4514");
         target.cppFlags.add("/wd 4820");
         target.cppFlags.add("/wd 4127");
@@ -311,8 +309,42 @@ public class Main {
         target.cppFlags.add("-diagnostics:column");
     }
 
-    private static BuildTarget getEmscriptenBuildTarget(String idlPath) {
-        EmscriptenTarget teaVMTarget = new EmscriptenTarget(idlPath);
+    private static BuildMultiTarget getEmscriptenBuildTarget(String idlPath) {
+        BuildMultiTarget multiTarget = new BuildMultiTarget();
+
+        // TARGET FOUNDATION
+
+        EmscriptenLibTarget foundationTarget = new EmscriptenLibTarget();
+        foundationTarget.libName = "foundation";
+        foundationTarget.libSuffix = "64.lib";
+        addIncludeDirs(foundationTarget);
+        addFlags(foundationTarget);
+        foundationTarget.cppFlags.add("-D");
+        foundationTarget.cppFlags.add("PhysXFoundation_EXPORTS");
+        foundationTarget.cppFlags.add("-D");
+        foundationTarget.cppFlags.add("__EMSCRIPTEN__");
+        foundationTarget.cppIncludes.add("**/src/physx/source/foundation/*.cpp");
+        foundationTarget.cppIncludes.add("**/src/physx/source/foundation/windows/*.cpp");
+        multiTarget.add(foundationTarget);
+
+
+//        EmscriptenTarget foundationTarget = new EmscriptenTarget(idlPath);
+//        addIncludeDirs(foundationTarget);
+//        addFlags(foundationTarget);
+////        foundationTarget.isStatic = true;
+////        foundationTarget.addJNI = false;
+//        foundationTarget.libName = "foundation";
+//        foundationTarget.libSuffix = "64.lib";
+//        addIncludes(foundationTarget);
+//        foundationTarget.headerDirs.add("-Isrc/physx/include");
+//        foundationTarget.headerDirs.add("-Isrc/physx/source/foundation/include");
+//        foundationTarget.cppFlags.add("-D");
+//        foundationTarget.cppFlags.add("PhysXFoundation_EXPORTS");
+//        foundationTarget.cppIncludes.add("**/src/physx/source/foundation/*.cpp");
+//        foundationTarget.cppIncludes.add("**/src/physx/source/foundation/windows/*.cpp");
+//        multiTarget.add(foundationTarget);
+
+
 //        teaVMTarget.headerDirs.add("-Isrc/bullet");
 //        teaVMTarget.headerDirs.add("-includesrc/jsglue/Bullet.h");
 //        teaVMTarget.headerDirs.add("-includesrc/jsglue/custom_glue.cpp");
@@ -322,7 +354,7 @@ public class Main {
 //        teaVMTarget.cppIncludes.add("**/src/bullet/LinearMath/**.cpp");
 //        teaVMTarget.cppIncludes.add("**/src/jsglue/glue.cpp");
 //        teaVMTarget.cppFlags.add("-DBT_USE_INVERSE_DYNAMICS_WITH_BULLET2");
-        return teaVMTarget;
+        return multiTarget;
     }
 
     private static BuildTarget getAndroidBuildTarget() {
