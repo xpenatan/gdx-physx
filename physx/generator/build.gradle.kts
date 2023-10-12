@@ -26,13 +26,15 @@ tasks.register<JavaExec>("build_project") {
 
 val zippedPath = "$buildDir/physx-source.zip"
 val sourcePath = "$buildDir/physx-source"
-val unzippedFolder = "$sourcePath/PhysX-105.1-physx-5.3.0/physx"
+//val unzippedFolder = "$sourcePath/PhysX-105.1-physx-5.3.0/physx"
+val unzippedFolder = "$sourcePath/PhysX-14c72ec5ca90ef7f4ab77321aceed6eb2d2b3fca/physx"
 val sourceDestination = "$buildDir/physx/physx/"
 
 tasks.register<Download>("download_source") {
     group = "physx"
     description = "Download physX source"
-    src("https://github.com/NVIDIA-Omniverse/PhysX/archive/refs/tags/105.1-physx-5.3.0.zip")
+//    src("https://github.com/NVIDIA-Omniverse/PhysX/archive/refs/tags/105.1-physx-5.3.0.zip")
+    src("https://github.com/fabmax/PhysX/archive/14c72ec5ca90ef7f4ab77321aceed6eb2d2b3fca.zip")
     dest(File(zippedPath))
     doLast {
         unzipTo(File(sourcePath), dest)
