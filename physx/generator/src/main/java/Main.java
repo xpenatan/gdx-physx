@@ -79,8 +79,8 @@ public class Main {
 
         JBuilder.build(
                 buildConfig,
-//                getWindowBuildTarget()
-                getEmscriptenBuildTarget(idlPath)
+                getWindowBuildTarget()
+//                getEmscriptenBuildTarget(idlPath)
 //                getAndroidBuildTarget()
         );
     }
