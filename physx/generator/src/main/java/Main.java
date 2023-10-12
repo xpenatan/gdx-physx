@@ -272,8 +272,6 @@ public class Main {
         target.cppFlags.add("PX_SUPPORT_PVD=1");
         target.cppFlags.add("-D");
         target.cppFlags.add("PX_SUPPORT_OMNI_PVD=1");
-        target.cppFlags.add("-WX");
-        target.cppFlags.add("-W4");
         target.cppFlags.add("-D");
         target.cppFlags.add("_CRT_SECURE_NO_DEPRECATE");
         target.cppFlags.add("-D");
@@ -285,6 +283,8 @@ public class Main {
     private static void addIncludes(BuildTarget target) {
         addIncludeDirs(target);
         addFlags(target);
+        target.cppFlags.add("-WX");
+        target.cppFlags.add("-W4");
         target.cppFlags.add("/wd 4514");
         target.cppFlags.add("/wd 4820");
         target.cppFlags.add("/wd 4127");
