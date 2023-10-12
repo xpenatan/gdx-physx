@@ -7,7 +7,7 @@ gretty {
     extraResourceBase("build/dist/webapp")
 }
 
-val mainClassName = "com.github.xpenatan.gdx.examples.bullet.Build"
+val mainClassName = "com.github.xpenatan.gdx.examples.physx.Build"
 
 dependencies {
     implementation(project(":examples:basic:core"))
@@ -19,14 +19,14 @@ dependencies {
 tasks.register<JavaExec>("buildExample") {
     dependsOn("classes")
     group = "teavm"
-    description = "Build Bullet example"
+    description = "Build physx example"
     mainClass.set(mainClassName)
     classpath = sourceSets["main"].runtimeClasspath
 }
 
 tasks.register("run_basic_teavm") {
     group = "examples-teavm"
-    description = "Run Bullet example"
+    description = "Run physx example"
     val list = arrayOf(
         "clean",
         "buildExample",

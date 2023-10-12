@@ -3,7 +3,6 @@ import com.github.xpenatan.jparser.builder.BuildMultiTarget;
 import com.github.xpenatan.jparser.builder.BuildTarget;
 import com.github.xpenatan.jparser.builder.JBuilder;
 import com.github.xpenatan.jparser.builder.targets.AndroidTarget;
-import com.github.xpenatan.jparser.builder.targets.EmscriptenLibTarget;
 import com.github.xpenatan.jparser.builder.targets.EmscriptenTarget;
 import com.github.xpenatan.jparser.builder.targets.WindowsMSVSTarget;
 import com.github.xpenatan.jparser.core.JParser;
@@ -312,59 +311,40 @@ public class Main {
     private static BuildMultiTarget getEmscriptenBuildTarget(String idlPath) {
         BuildMultiTarget multiTarget = new BuildMultiTarget();
 
-        // TARGET FOUNDATION
+        EmscriptenTarget teaVMTarget = new EmscriptenTarget(idlPath);
+        teaVMTarget.headerDirs.add("-includesrc/physx/PhysxCustom.h");
 
-        EmscriptenLibTarget foundationTarget = new EmscriptenLibTarget();
-        foundationTarget.libName = "foundation";
-        foundationTarget.libSuffix = "64.lib";
-        addIncludeDirs(foundationTarget);
-        addFlags(foundationTarget);
-        foundationTarget.cppFlags.add("-D");
-        foundationTarget.cppFlags.add("PhysXFoundation_EXPORTS");
-        foundationTarget.cppFlags.add("-D");
-        foundationTarget.cppFlags.add("__EMSCRIPTEN__");
-        foundationTarget.cppIncludes.add("**/src/physx/source/foundation/*.cpp");
-        foundationTarget.cppIncludes.add("**/src/physx/source/foundation/windows/*.cpp");
-        multiTarget.add(foundationTarget);
+        teaVMTarget.cppIncludes.add("**/src/physx/source/foundation/*.cpp");
+        teaVMTarget.cppIncludes.add("**/src/physx/source/foundation/unix/*.cpp");
 
+        teaVMTarget.cppFlags.add("-D");
+        teaVMTarget.cppFlags.add("__EMSCRIPTEN__");
+        teaVMTarget.cppFlags.add("-D");
+        teaVMTarget.cppFlags.add("PX_EMSCRIPTEN");
 
-//        EmscriptenTarget foundationTarget = new EmscriptenTarget(idlPath);
-//        addIncludeDirs(foundationTarget);
-//        addFlags(foundationTarget);
-////        foundationTarget.isStatic = true;
-////        foundationTarget.addJNI = false;
-//        foundationTarget.libName = "foundation";
-//        foundationTarget.libSuffix = "64.lib";
-//        addIncludes(foundationTarget);
-//        foundationTarget.headerDirs.add("-Isrc/physx/include");
-//        foundationTarget.headerDirs.add("-Isrc/physx/source/foundation/include");
-//        foundationTarget.cppFlags.add("-D");
-//        foundationTarget.cppFlags.add("PhysXFoundation_EXPORTS");
-//        foundationTarget.cppIncludes.add("**/src/physx/source/foundation/*.cpp");
-//        foundationTarget.cppIncludes.add("**/src/physx/source/foundation/windows/*.cpp");
-//        multiTarget.add(foundationTarget);
+        addIncludeDirs(teaVMTarget);
+        addFlags(teaVMTarget);
 
+        teaVMTarget.cppIncludes.add("**/src/physx/source/common/src/*.cpp");
+        teaVMTarget.cppIncludes.add("**/src/physx/source/lowlevel/software/src/**.cpp");
+        teaVMTarget.cppIncludes.add("**/src/physx/source/lowlevel/common/src/**.cpp");
+        teaVMTarget.cppIncludes.add("**/src/physx/source/lowlevel/software/src/**.cpp");
+        teaVMTarget.cppIncludes.add("**/src/physx/source/lowlevelaabb/src/**.cpp");
+        teaVMTarget.cppIncludes.add("**/src/physx/source/lowleveldynamics/src/**.cpp");
+        teaVMTarget.cppIncludes.add("**/src/physx/source/scenequery/src/**.cpp");
+        teaVMTarget.cppIncludes.add("**/src/physx/source/simulationcontroller/src/**.cpp");
+        teaVMTarget.cppIncludes.add("**/src/physx/source/pvd/src/**.cpp");
+        teaVMTarget.cppIncludes.add("**/src/physx/source/physx/src/*.cpp");
+        teaVMTarget.cppIncludes.add("**/src/physx/source/physx/src/omnipvd/**.cpp");
+        teaVMTarget.cppIncludes.add("**/src/physx/source/physx/src/gpu/**.cpp");
+        teaVMTarget.cppIncludes.add("**/src/physx/source/physx/src/device/linux/**.cpp");
 
-//        teaVMTarget.headerDirs.add("-Isrc/bullet");
-//        teaVMTarget.headerDirs.add("-includesrc/jsglue/Bullet.h");
-//        teaVMTarget.headerDirs.add("-includesrc/jsglue/custom_glue.cpp");
-//        teaVMTarget.cppIncludes.add("**/src/bullet/BulletCollision/**.cpp");
-//        teaVMTarget.cppIncludes.add("**/src/bullet/BulletDynamics/**.cpp");
-//        teaVMTarget.cppIncludes.add("**/src/bullet/BulletSoftBody/**.cpp");
-//        teaVMTarget.cppIncludes.add("**/src/bullet/LinearMath/**.cpp");
-//        teaVMTarget.cppIncludes.add("**/src/jsglue/glue.cpp");
-//        teaVMTarget.cppFlags.add("-DBT_USE_INVERSE_DYNAMICS_WITH_BULLET2");
+        multiTarget.add(teaVMTarget);
         return multiTarget;
     }
 
     private static BuildTarget getAndroidBuildTarget() {
         AndroidTarget androidTarget = new AndroidTarget();
-//        androidTarget.headerDirs.add("src/bullet/");
-//        androidTarget.cppIncludes.add("**/src/bullet/BulletCollision/**.cpp");
-//        androidTarget.cppIncludes.add("**/src/bullet/BulletDynamics/**.cpp");
-//        androidTarget.cppIncludes.add("**/src/bullet/BulletSoftBody/**.cpp");
-//        androidTarget.cppIncludes.add("**/src/bullet/LinearMath/**.cpp");
-//        androidTarget.cppFlags.add("-DBT_USE_INVERSE_DYNAMICS_WITH_BULLET2");
         return androidTarget;
     }
 }

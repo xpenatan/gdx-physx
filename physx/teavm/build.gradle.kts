@@ -1,6 +1,6 @@
 val moduleName = "physx-teavm"
 
-val emscriptenFile = "$projectDir/../generator/build/c++/libs/physx.wasm.js"
+val emscriptenFile = "$projectDir/../generator/build/c++/libs/emscripten/physx.wasm.js"
 
 tasks.jar {
     from(emscriptenFile)
