@@ -88,121 +88,175 @@ public class Main {
     private static BuildMultiTarget getWindowBuildTarget() {
         BuildMultiTarget multiTarget = new BuildMultiTarget();
 
-        // TARGET FOUNDATION
+        boolean buildLibrary = false;
 
-        WindowsMSVSTarget foundationTarget = new WindowsMSVSTarget();
-        foundationTarget.isStatic = true;
-        foundationTarget.addJNI = false;
-        foundationTarget.libName = "foundation";
-        foundationTarget.libSuffix = "64.lib";
-        addIncludes(foundationTarget);
-        foundationTarget.cppFlags.add("-D");
-        foundationTarget.cppFlags.add("PhysXFoundation_EXPORTS");
-        foundationTarget.cppIncludes.add("**/src/physx/source/foundation/*.cpp");
-        foundationTarget.cppIncludes.add("**/src/physx/source/foundation/windows/*.cpp");
-        multiTarget.add(foundationTarget);
+        if(buildLibrary) {
+            // TARGET FOUNDATION
 
-        // TARGET COMMON
+            WindowsMSVSTarget foundationTarget = new WindowsMSVSTarget();
+            foundationTarget.isStatic = true;
+            foundationTarget.addJNI = false;
+            foundationTarget.libName = "foundation";
+            foundationTarget.libSuffix = "64.lib";
+            addIncludes(foundationTarget);
+            foundationTarget.cppFlags.add("-D");
+            foundationTarget.cppFlags.add("PhysXFoundation_EXPORTS");
+            foundationTarget.cppIncludes.add("**/src/physx/source/foundation/*.cpp");
+            foundationTarget.cppIncludes.add("**/src/physx/source/foundation/windows/*.cpp");
+            multiTarget.add(foundationTarget);
 
-        WindowsMSVSTarget commonTarget = new WindowsMSVSTarget();
-        commonTarget.isStatic = true;
-        commonTarget.addJNI = false;
-        commonTarget.libName = "common";
-        commonTarget.libSuffix = "64.lib";
-        addIncludes(commonTarget);
-        commonTarget.cppIncludes.add("**/src/physx/source/common/src/*.cpp");
-        commonTarget.cppIncludes.add("**/src/physx/source/common/src/windows/*.cpp");
-        commonTarget.cppFlags.add("-D");
-        commonTarget.cppFlags.add("PhysXCommon_EXPORTS");
-        commonTarget.linkerFlags.add("../../libs/windows/foundation64.lib");
-        multiTarget.add(commonTarget);
+            // TARGET COMMON
 
-        // TARGET LOWLEVEL
+            WindowsMSVSTarget commonTarget = new WindowsMSVSTarget();
+            commonTarget.isStatic = true;
+            commonTarget.addJNI = false;
+            commonTarget.libName = "common";
+            commonTarget.libSuffix = "64.lib";
+            addIncludes(commonTarget);
+            commonTarget.cppIncludes.add("**/src/physx/source/common/src/*.cpp");
+            commonTarget.cppIncludes.add("**/src/physx/source/common/src/windows/*.cpp");
+            commonTarget.cppFlags.add("-D");
+            commonTarget.cppFlags.add("PhysXCommon_EXPORTS");
+            commonTarget.linkerFlags.add("../../libs/windows/foundation64.lib");
+            multiTarget.add(commonTarget);
 
-        WindowsMSVSTarget lowLevelTarget = new WindowsMSVSTarget();
-        lowLevelTarget.isStatic = true;
-        lowLevelTarget.addJNI = false;
-        lowLevelTarget.libName = "lowlevel";
-        lowLevelTarget.libSuffix = "64.lib";
-        addIncludes(lowLevelTarget);
-        lowLevelTarget.cppIncludes.add("**/src/physx/source/lowlevel/software/src/**.cpp");
-        lowLevelTarget.cppIncludes.add("**/src/physx/source/lowlevel/common/src/**.cpp");
-        lowLevelTarget.cppIncludes.add("**/src/physx/source/lowlevel/software/src/**.cpp");
-        multiTarget.add(lowLevelTarget);
+            // TARGET COOKING
 
-        // TARGET LOWLEVELAABB
+            WindowsMSVSTarget cookingTarget = new WindowsMSVSTarget();
+            cookingTarget.isStatic = true;
+            cookingTarget.addJNI = false;
+            cookingTarget.libName = "cooking";
+            cookingTarget.libSuffix = "64.lib";
+            addIncludes(cookingTarget);
+            cookingTarget.cppIncludes.add("**/src/physx/source/physxcooking/src/**.cpp");
+            cookingTarget.linkerFlags.add("../../libs/windows/foundation64.lib");
+            cookingTarget.linkerFlags.add("../../libs/windows/common64.lib");
+            multiTarget.add(cookingTarget);
 
-        WindowsMSVSTarget lowLevelAABBTarget = new WindowsMSVSTarget();
-        lowLevelAABBTarget.isStatic = true;
-        lowLevelAABBTarget.addJNI = false;
-        lowLevelAABBTarget.libName = "lowlevelAABB";
-        lowLevelAABBTarget.libSuffix = "64.lib";
-        addIncludes(lowLevelAABBTarget);
-        lowLevelAABBTarget.cppIncludes.add("**/src/physx/source/lowlevelaabb/src/**.cpp");
-        multiTarget.add(lowLevelAABBTarget);
+            // TARGET EXTENSIONS
 
-        // TARGET LOWLEVELDYNAMICS
+            WindowsMSVSTarget extensionsTarget = new WindowsMSVSTarget();
+            extensionsTarget.isStatic = true;
+            extensionsTarget.addJNI = false;
+            extensionsTarget.libName = "extensions";
+            extensionsTarget.libSuffix = "64.lib";
+            addIncludes(extensionsTarget);
+            extensionsTarget.cppIncludes.add("**/src/physx/source/physxextensions/**.cpp");
+            multiTarget.add(extensionsTarget);
 
-        WindowsMSVSTarget lowLevelDynamicsTarget = new WindowsMSVSTarget();
-        lowLevelDynamicsTarget.isStatic = true;
-        lowLevelDynamicsTarget.addJNI = false;
-        lowLevelDynamicsTarget.libName = "lowlevelDynamics";
-        lowLevelDynamicsTarget.libSuffix = "64.lib";
-        addIncludes(lowLevelDynamicsTarget);
-        lowLevelDynamicsTarget.cppIncludes.add("**/src/physx/source/lowleveldynamics/src/**.cpp");
-        multiTarget.add(lowLevelDynamicsTarget);
+            // TARGET VEHICLE
 
-        // TARGET SCENEQUERY
+            WindowsMSVSTarget vehicleTarget = new WindowsMSVSTarget();
+            vehicleTarget.isStatic = true;
+            vehicleTarget.addJNI = false;
+            vehicleTarget.libName = "vehicle";
+            vehicleTarget.libSuffix = "64.lib";
+            addIncludes(vehicleTarget);
+            vehicleTarget.cppIncludes.add("**/src/physx/source/physxvehicle/**.cpp");
+            multiTarget.add(vehicleTarget);
 
-        WindowsMSVSTarget sceneQueryTarget = new WindowsMSVSTarget();
-        sceneQueryTarget.isStatic = true;
-        sceneQueryTarget.addJNI = false;
-        sceneQueryTarget.libName = "scenequery";
-        sceneQueryTarget.libSuffix = "64.lib";
-        addIncludes(sceneQueryTarget);
-        sceneQueryTarget.cppIncludes.add("**/src/physx/source/scenequery/src/**.cpp");
-        multiTarget.add(sceneQueryTarget);
+            // TARGET VEHICLE 2
 
-        // TARGET SIMULATIONCONTROLLER
+            WindowsMSVSTarget vehicle2Target = new WindowsMSVSTarget();
+            vehicle2Target.isStatic = true;
+            vehicle2Target.addJNI = false;
+            vehicle2Target.libName = "vehicle2";
+            vehicle2Target.libSuffix = "64.lib";
+            addIncludes(vehicle2Target);
+            vehicle2Target.cppIncludes.add("**/src/physx/source/physxvehicle2/**.cpp");
+            multiTarget.add(vehicle2Target);
 
-        WindowsMSVSTarget simulationControllerTarget = new WindowsMSVSTarget();
-        simulationControllerTarget.isStatic = true;
-        simulationControllerTarget.addJNI = false;
-        simulationControllerTarget.libName = "simulationcontroller";
-        simulationControllerTarget.libSuffix = "64.lib";
-        addIncludes(simulationControllerTarget);
-        simulationControllerTarget.cppIncludes.add("**/src/physx/source/simulationcontroller/src/**.cpp");
-        multiTarget.add(simulationControllerTarget);
+            // TARGET LOWLEVEL
 
-        // TARGET PHYSXPVDSDK
+            WindowsMSVSTarget lowLevelTarget = new WindowsMSVSTarget();
+            lowLevelTarget.isStatic = true;
+            lowLevelTarget.addJNI = false;
+            lowLevelTarget.libName = "lowlevel";
+            lowLevelTarget.libSuffix = "64.lib";
+            addIncludes(lowLevelTarget);
+            lowLevelTarget.cppIncludes.add("**/src/physx/source/lowlevel/software/src/**.cpp");
+            lowLevelTarget.cppIncludes.add("**/src/physx/source/lowlevel/common/src/**.cpp");
+            lowLevelTarget.cppIncludes.add("**/src/physx/source/lowlevel/software/src/**.cpp");
+            multiTarget.add(lowLevelTarget);
 
-        WindowsMSVSTarget physXPvdSDKTarget = new WindowsMSVSTarget();
-        physXPvdSDKTarget.isStatic = true;
-        physXPvdSDKTarget.addJNI = false;
-        physXPvdSDKTarget.libName = "pvd";
-        physXPvdSDKTarget.libSuffix = "64.lib";
-        addIncludes(physXPvdSDKTarget);
-        physXPvdSDKTarget.cppIncludes.add("**/src/physx/source/pvd/src/**.cpp");
-        multiTarget.add(physXPvdSDKTarget);
+            // TARGET LOWLEVELAABB
 
-        // TARGET PHYSX
+            WindowsMSVSTarget lowLevelAABBTarget = new WindowsMSVSTarget();
+            lowLevelAABBTarget.isStatic = true;
+            lowLevelAABBTarget.addJNI = false;
+            lowLevelAABBTarget.libName = "lowlevelAABB";
+            lowLevelAABBTarget.libSuffix = "64.lib";
+            addIncludes(lowLevelAABBTarget);
+            lowLevelAABBTarget.cppIncludes.add("**/src/physx/source/lowlevelaabb/src/**.cpp");
+            multiTarget.add(lowLevelAABBTarget);
 
-        WindowsMSVSTarget physxTarget = new WindowsMSVSTarget();
-        physxTarget.isStatic = true;
-        physxTarget.addJNI = false;
-        physxTarget.libName = "physx";
-        physxTarget.libSuffix = "64.lib";
-        addIncludes(physxTarget);
-        physxTarget.cppIncludes.add("**/src/physx/source/physx/src/*.cpp");
-        physxTarget.cppIncludes.add("**/src/physx/source/physx/src/windows/**.cpp");
-        physxTarget.cppIncludes.add("**/src/physx/source/physx/src/omnipvd/**.cpp");
-        physxTarget.cppIncludes.add("**/src/physx/source/physx/src/gpu/**.cpp");
-        physxTarget.cppIncludes.add("**/src/physx/source/physx/src/device/windows/**.cpp");
-        multiTarget.add(physxTarget);
+            // TARGET LOWLEVELDYNAMICS
+
+            WindowsMSVSTarget lowLevelDynamicsTarget = new WindowsMSVSTarget();
+            lowLevelDynamicsTarget.isStatic = true;
+            lowLevelDynamicsTarget.addJNI = false;
+            lowLevelDynamicsTarget.libName = "lowlevelDynamics";
+            lowLevelDynamicsTarget.libSuffix = "64.lib";
+            addIncludes(lowLevelDynamicsTarget);
+            lowLevelDynamicsTarget.cppIncludes.add("**/src/physx/source/lowleveldynamics/src/**.cpp");
+            multiTarget.add(lowLevelDynamicsTarget);
+
+            // TARGET SCENEQUERY
+
+            WindowsMSVSTarget sceneQueryTarget = new WindowsMSVSTarget();
+            sceneQueryTarget.isStatic = true;
+            sceneQueryTarget.addJNI = false;
+            sceneQueryTarget.libName = "scenequery";
+            sceneQueryTarget.libSuffix = "64.lib";
+            addIncludes(sceneQueryTarget);
+            sceneQueryTarget.cppIncludes.add("**/src/physx/source/scenequery/src/**.cpp");
+            multiTarget.add(sceneQueryTarget);
+
+            // TARGET SIMULATIONCONTROLLER
+
+            WindowsMSVSTarget simulationControllerTarget = new WindowsMSVSTarget();
+            simulationControllerTarget.isStatic = true;
+            simulationControllerTarget.addJNI = false;
+            simulationControllerTarget.libName = "simulationcontroller";
+            simulationControllerTarget.libSuffix = "64.lib";
+            addIncludes(simulationControllerTarget);
+            simulationControllerTarget.cppIncludes.add("**/src/physx/source/simulationcontroller/src/**.cpp");
+            multiTarget.add(simulationControllerTarget);
+
+            // TARGET PHYSXPVDSDK
+
+            WindowsMSVSTarget physXPvdSDKTarget = new WindowsMSVSTarget();
+            physXPvdSDKTarget.isStatic = true;
+            physXPvdSDKTarget.addJNI = false;
+            physXPvdSDKTarget.libName = "pvd";
+            physXPvdSDKTarget.libSuffix = "64.lib";
+            addIncludes(physXPvdSDKTarget);
+            physXPvdSDKTarget.cppIncludes.add("**/src/physx/source/pvd/src/**.cpp");
+            multiTarget.add(physXPvdSDKTarget);
+
+            // TARGET PHYSX
+
+            WindowsMSVSTarget physxTarget = new WindowsMSVSTarget();
+            physxTarget.isStatic = true;
+            physxTarget.addJNI = false;
+            physxTarget.libName = "physx";
+            physxTarget.libSuffix = "64.lib";
+            addIncludes(physxTarget);
+            physxTarget.cppIncludes.add("**/src/physx/source/physx/src/*.cpp");
+            physxTarget.cppIncludes.add("**/src/physx/source/physx/src/windows/**.cpp");
+            physxTarget.cppIncludes.add("**/src/physx/source/physx/src/omnipvd/**.cpp");
+            physxTarget.cppIncludes.add("**/src/physx/source/physx/src/gpu/**.cpp");
+            physxTarget.cppIncludes.add("**/src/physx/source/physx/src/device/windows/**.cpp");
+            multiTarget.add(physxTarget);
+        }
+
 
         WindowsMSVSTarget glueTarget = new WindowsMSVSTarget();
         addIncludes(glueTarget);
+        glueTarget.headerDirs.add("-Isrc/physx/");
+        glueTarget.cppIncludes.add("**/src/physx/*.cpp");
         glueTarget.linkerFlags.add("../../libs/windows/common64.lib");
+        glueTarget.linkerFlags.add("../../libs/windows/extensions64.lib");
         glueTarget.linkerFlags.add("../../libs/windows/foundation64.lib");
         glueTarget.linkerFlags.add("../../libs/windows/lowlevel64.lib");
         glueTarget.linkerFlags.add("../../libs/windows/lowlevelAABB64.lib");
@@ -210,6 +264,9 @@ public class Main {
         glueTarget.linkerFlags.add("../../libs/windows/pvd64.lib");
         glueTarget.linkerFlags.add("../../libs/windows/scenequery64.lib");
         glueTarget.linkerFlags.add("../../libs/windows/simulationcontroller64.lib");
+        glueTarget.linkerFlags.add("../../libs/windows/vehicle64.lib");
+        glueTarget.linkerFlags.add("../../libs/windows/vehicle264.lib");
+        glueTarget.linkerFlags.add("../../libs/windows/cooking64.lib");
         multiTarget.add(glueTarget);
 
         return multiTarget;
@@ -246,7 +303,15 @@ public class Main {
         target.headerDirs.add("-Isrc/physx/source/simulationcontroller/include");
         target.headerDirs.add("-Isrc/physx/source/simulationcontroller/src");
         target.headerDirs.add("-Isrc/physx/source/scenequery/include");
+        target.headerDirs.add("-Isrc/physx/source/fastxml/include");
+        target.headerDirs.add("-Isrc/physx/source/physxvehicle/src");
+        target.headerDirs.add("-Isrc/physx/source/physxvehicle/src/physxmetadata/include");
         target.headerDirs.add("-Isrc/physx/source/physxmetadata/core/include");
+        target.headerDirs.add("-Isrc/physx/source/physxmetadata/extensions/include");
+        target.headerDirs.add("-Isrc/physx/source/physxextensions/src");
+        target.headerDirs.add("-Isrc/physx/source/physxextensions/src/serialization/Xml");
+        target.headerDirs.add("-Isrc/physx/source/physxextensions/src/serialization/Binary");
+        target.headerDirs.add("-Isrc/physx/source/physxextensions/src/serialization/File");
         target.headerDirs.add("-Isrc/physx/source/immediatemode/include");
         target.headerDirs.add("-Isrc/physx/source/pvd/include");
         target.headerDirs.add("-Isrc/physx/source/omnipvd");
@@ -291,6 +356,7 @@ public class Main {
         target.cppFlags.add("/wd 4577");
         target.cppFlags.add("/wd 4996");
         target.cppFlags.add("/wd 4100"); //unreferenced formal parameter
+        target.cppFlags.add("/wd 4530");
         target.cppFlags.add("-Zi");
         target.cppFlags.add("-Gm-");
         target.cppFlags.add("-Od");

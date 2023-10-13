@@ -8,8 +8,7 @@ import com.github.xpenatan.jparser.loader.JParserLibraryLoader;
 public class PhysxLoader {
 
     /*[-C++;-NATIVE]
-        #include "PxPhysicsAPI.h"
-        #include "foundation/PxVec3.h"
+        #include "PhysxCustom.h"
     */
 
     /*[-teaVM;-ADD]
