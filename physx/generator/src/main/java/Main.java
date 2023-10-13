@@ -202,7 +202,6 @@ public class Main {
 
         WindowsMSVSTarget glueTarget = new WindowsMSVSTarget();
         addIncludes(glueTarget);
-        glueTarget.linkerFlags.add("-DLL");
         glueTarget.linkerFlags.add("../../libs/windows/common64.lib");
         glueTarget.linkerFlags.add("../../libs/windows/foundation64.lib");
         glueTarget.linkerFlags.add("../../libs/windows/lowlevel64.lib");
