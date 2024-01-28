@@ -66,7 +66,7 @@ public class Main {
     private static BuildMultiTarget getWindowBuildTarget(String cppBuildPath) {
         BuildMultiTarget multiTarget = new BuildMultiTarget();
 
-        boolean buildLibrary = true;
+        boolean buildLibrary = false;
 
         if(buildLibrary) {
             // TARGET FOUNDATION
@@ -220,18 +220,20 @@ public class Main {
         addIncludes(glueTarget);
         glueTarget.headerDirs.add("-Isrc/physx/");
         glueTarget.cppInclude.add("**/src/physx/*.cpp");
-        glueTarget.linkerFlags.add("../../libs/windows/common64.lib");
-        glueTarget.linkerFlags.add("../../libs/windows/extensions64.lib");
-        glueTarget.linkerFlags.add("../../libs/windows/foundation64.lib");
-        glueTarget.linkerFlags.add("../../libs/windows/lowlevel64.lib");
-        glueTarget.linkerFlags.add("../../libs/windows/lowlevelAABB64.lib");
-        glueTarget.linkerFlags.add("../../libs/windows/lowlevelDynamics64.lib");
-        glueTarget.linkerFlags.add("../../libs/windows/pvd64.lib");
-        glueTarget.linkerFlags.add("../../libs/windows/scenequery64.lib");
-        glueTarget.linkerFlags.add("../../libs/windows/simulationcontroller64.lib");
-        glueTarget.linkerFlags.add("../../libs/windows/vehicle64.lib");
-        glueTarget.linkerFlags.add("../../libs/windows/vehicle264.lib");
-        glueTarget.linkerFlags.add("../../libs/windows/cooking64.lib");
+        glueTarget.cppInclude.add(cppBuildPath + "/src/jniglue/JNIGlue.cpp");
+        glueTarget.linkerFlags.add(cppBuildPath + "/libs/windows/common64.lib");
+        glueTarget.linkerFlags.add(cppBuildPath + "/libs/windows/extensions64.lib");
+        glueTarget.linkerFlags.add(cppBuildPath + "/libs/windows/foundation64.lib");
+        glueTarget.linkerFlags.add(cppBuildPath + "/libs/windows/lowlevel64.lib");
+        glueTarget.linkerFlags.add(cppBuildPath + "/libs/windows/lowlevelAABB64.lib");
+        glueTarget.linkerFlags.add(cppBuildPath + "/libs/windows/lowlevelDynamics64.lib");
+        glueTarget.linkerFlags.add(cppBuildPath + "/libs/windows/pvd64.lib");
+        glueTarget.linkerFlags.add(cppBuildPath + "/libs/windows/scenequery64.lib");
+        glueTarget.linkerFlags.add(cppBuildPath + "/libs/windows/simulationcontroller64.lib");
+        glueTarget.linkerFlags.add(cppBuildPath + "/libs/windows/vehicle64.lib");
+        glueTarget.linkerFlags.add(cppBuildPath + "/libs/windows/vehicle264.lib");
+        glueTarget.linkerFlags.add(cppBuildPath + "/libs/windows/cooking64.lib");
+
         multiTarget.add(glueTarget);
 
         return multiTarget;

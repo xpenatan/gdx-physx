@@ -1,3 +1,5 @@
+#pragma once
+
 #include <vector>
 #include <cstring>
 #include <iostream>
@@ -148,3 +150,93 @@ typedef std::vector<physx::PxVec4> Vector_PxVec4;
 //typedef PxHitResult<physx::PxOverlapHit> PxOverlapResult;
 //typedef PxHitResult<physx::PxRaycastHit> PxRaycastResult;
 //typedef PxHitResult<physx::PxSweepHit> PxSweepResult;
+
+struct PxTopLevelFunctions {
+    static const physx::PxU32 PHYSICS_VERSION = PX_PHYSICS_VERSION;
+
+//    static physx::PxSimulationFilterShader DefaultFilterShader() {
+//        return &defaultFilterShader;
+//    }
+//
+//    static void setupPassThroughFilterShader(physx::PxSceneDesc* sceneDesc, PassThroughFilterShader* filterShader) {
+//        PassThroughFilterShader** data = new PassThroughFilterShader*[1];
+//        data[0] = filterShader;
+//        sceneDesc->filterShader = &passThrFilterShader;
+//        sceneDesc->filterShaderData = data;
+//        sceneDesc->filterShaderDataSize = sizeof(PassThroughFilterShader*);
+//    }
+//
+//    static physx::PxFoundation* CreateFoundation(physx::PxU32 version, physx::PxDefaultAllocator& allocator, physx::PxErrorCallback& errorCallback) {
+//        return PxCreateFoundation(version, allocator, errorCallback);
+//    }
+//
+//    static physx::PxPhysics *CreatePhysics(physx::PxU32 version, physx::PxFoundation &foundation, const physx::PxTolerancesScale &scale, physx::PxPvd* pvd = NULL, physx::PxOmniPvd* omniPvd = NULL) {
+//        return PxCreatePhysics(version, foundation, scale, false, pvd, omniPvd);
+//    }
+//
+//    static physx::PxControllerManager* CreateControllerManager(physx::PxScene& scene, bool lockingEnabled = false) {
+//        return PxCreateControllerManager(scene, lockingEnabled);
+//    }
+//
+//    static physx::PxPvd *CreatePvd(physx::PxFoundation &foundation) {
+//        return PxCreatePvd(foundation);
+//    }
+//
+//#ifndef __EMSCRIPTEN__
+//    static physx::PxPvdTransport* DefaultPvdSocketTransportCreate(const char *host, int port, unsigned int timeoutInMilliseconds) {
+//        return physx::PxDefaultPvdSocketTransportCreate(host, port, timeoutInMilliseconds);
+//    }
+//
+//    static physx::PxOmniPvd *CreateOmniPvd(physx::PxFoundation &foundation) {
+//        return PxCreateOmniPvd(foundation);
+//    }
+//#endif
+//
+//    static physx::PxDefaultCpuDispatcher* DefaultCpuDispatcherCreate(physx::PxU32 numThreads) {
+//        return physx::PxDefaultCpuDispatcherCreate(numThreads);
+//    }
+//
+//    static bool InitExtensions(physx::PxPhysics& physics) {
+//        return PxInitExtensions(physics, NULL);
+//    }
+//
+//    static void CloseExtensions() {
+//        PxCloseExtensions();
+//    }
+//
+//    static physx::PxD6Joint* D6JointCreate(physx::PxPhysics& physics, physx::PxRigidActor* actor0, physx::PxTransform& localFrame0, physx::PxRigidActor* actor1, physx::PxTransform& localFrame1) {
+//        return physx::PxD6JointCreate(physics, actor0, localFrame0, actor1, localFrame1);
+//    }
+//
+//    static physx::PxDistanceJoint* DistanceJointCreate(physx::PxPhysics& physics, physx::PxRigidActor* actor0, physx::PxTransform& localFrame0, physx::PxRigidActor* actor1, physx::PxTransform& localFrame1) {
+//        return physx::PxDistanceJointCreate(physics, actor0, localFrame0, actor1, localFrame1);
+//    }
+//
+//    static physx::PxFixedJoint* FixedJointCreate(physx::PxPhysics& physics, physx::PxRigidActor* actor0, physx::PxTransform& localFrame0, physx::PxRigidActor* actor1, physx::PxTransform& localFrame1) {
+//        return physx::PxFixedJointCreate(physics, actor0, localFrame0, actor1, localFrame1);
+//    }
+//
+//    static physx::PxPrismaticJoint* PrismaticJointCreate(physx::PxPhysics& physics, physx::PxRigidActor* actor0, physx::PxTransform& localFrame0, physx::PxRigidActor* actor1, physx::PxTransform& localFrame1) {
+//        return physx::PxPrismaticJointCreate(physics, actor0, localFrame0, actor1, localFrame1);
+//    }
+//
+//    static physx::PxRevoluteJoint* RevoluteJointCreate(physx::PxPhysics& physics, physx::PxRigidActor* actor0, physx::PxTransform& localFrame0, physx::PxRigidActor* actor1, physx::PxTransform& localFrame1) {
+//        return physx::PxRevoluteJointCreate(physics, actor0, localFrame0, actor1, localFrame1);
+//    }
+//
+//    static physx::PxSphericalJoint* SphericalJointCreate(physx::PxPhysics& physics, physx::PxRigidActor* actor0, physx::PxTransform& localFrame0, physx::PxRigidActor* actor1, physx::PxTransform& localFrame1) {
+//        return physx::PxSphericalJointCreate(physics, actor0, localFrame0, actor1, localFrame1);
+//    }
+//
+//    static physx::PxConvexMesh* CreateConvexMesh(const physx::PxCookingParams& params, const physx::PxConvexMeshDesc& desc) {
+//        return PxCreateConvexMesh(params, desc);
+//    }
+//
+//    static physx::PxTriangleMesh* CreateTriangleMesh(const physx::PxCookingParams &params, const physx::PxTriangleMeshDesc &desc) {
+//        return PxCreateTriangleMesh(params, desc);
+//    }
+//
+//    static physx::PxHeightField* CreateHeightField(const physx::PxHeightFieldDesc &desc) {
+//        return PxCreateHeightField(desc);
+//    }
+};

@@ -2,17 +2,21 @@ package com.github.xpenatan.gdx.examples.physx;
 
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
-import physx.include.foundation.PxVec3;
+import physx.PxTopLevelFunctions;
+import physx.foundation.PxVec3;
 
 public class PhysxTestScreen extends ScreenAdapter implements InputProcessor {
 
 
     @Override
     public void show() {
-        PxVec3 test = new PxVec3();
-        test.set_x(10);
-        float x = test.get_x();
-        System.out.println("X: " + x);
+        int i = PxTopLevelFunctions.PHYSICS_VERSION();
+
+        System.out.println("VERSION: " + i);
+//        PxVec3 test = new PxVec3();
+//        test.x(10);
+//        float x = test.x();
+//        System.out.println("X: " + x);
     }
 
     @Override

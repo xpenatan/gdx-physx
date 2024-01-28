@@ -1,6 +1,7 @@
 val moduleName = "physx-desktop"
 
-val windowsFile = "$projectDir/../generator/build/c++/libs/windows/physx64.dll"
+val physxDir = "${rootProject.projectDir}/physx"
+val windowsFile = "$physxDir/generator/build/c++/libs/windows/physx64.dll"
 
 tasks.jar {
     from(windowsFile)

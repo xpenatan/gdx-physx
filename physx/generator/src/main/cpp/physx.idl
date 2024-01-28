@@ -266,7 +266,7 @@ interface PxActor {
     PxActorTypeEnum getType();
     PxScene getScene();
     void setName([Const] DOMString name);
-    [Const] DOMString getName();
+    [Const] IDLString getName();
     [Value] PxBounds3 getWorldBounds(optional float inflation);
     void setActorFlag(PxActorFlagEnum flag, boolean value);
     void setActorFlags([Ref] PxActorFlags flags);
@@ -469,7 +469,7 @@ interface PxArticulationReducedCoordinate {
     unsigned long getNbLinks();
     unsigned long getNbShapes();
     void setName([Const] DOMString name);
-    [Const] DOMString getName();
+    [Const] IDLString getName();
     [Value] PxBounds3 getWorldBounds(optional float inflation);
     PxAggregate getAggregate();
     void setArticulationFlags([Ref] PxArticulationFlags flags);
@@ -603,7 +603,7 @@ interface PxBVH34MidphaseDesc {
 [Prefix="physx::", NoDelete]
 interface PxBase {
     void release();
-    [Const] DOMString getConcreteTypeName();
+    [Const] IDLString getConcreteTypeName();
     long getConcreteType();
     void setBaseFlag(PxBaseFlagEnum flag, boolean value);
     void setBaseFlags([Ref] PxBaseFlags inFlags);
@@ -1490,7 +1490,7 @@ interface PxJoint {
     float getInvMassScale1();
     PxConstraint getConstraint();
     void setName([Const] DOMString name);
-    [Const] DOMString getName();
+    [Const] IDLString getName();
     PxScene getScene();
 //    attribute VoidPtr userData;
 };
@@ -2315,7 +2315,7 @@ interface PxShape {
     [Value] PxShapeFlags getFlags();
     boolean isExclusive();
     void setName([Const] DOMString name);
-    [Const] DOMString getName();
+    [Const] IDLString getName();
     void setLocalPose([Const, Ref] PxTransform pose);
     [Value] PxTransform getLocalPose();
     void setSimulationFilterData([Const, Ref] PxFilterData data);
@@ -2491,8 +2491,8 @@ interface PxTolerancesScale {
     void PxTolerancesScale();
 };
 
-//[NoDelete]
-//interface PxTopLevelFunctions {
+[NoDelete]
+interface PxTopLevelFunctions {
 //    [Value] static PxSimulationFilterShader DefaultFilterShader();
 //    static void setupPassThroughFilterShader(PxSceneDesc sceneDesc, PassThroughFilterShader filterShader);
 //    static PxControllerManager CreateControllerManager([Ref] PxScene scene, optional boolean lockingEnabled);
@@ -2511,8 +2511,8 @@ interface PxTolerancesScale {
 //    static PxConvexMesh CreateConvexMesh([Const, Ref] PxCookingParams params, [Const, Ref] PxConvexMeshDesc desc);
 //    static PxTriangleMesh CreateTriangleMesh([Const, Ref] PxCookingParams params, [Const, Ref] PxTriangleMeshDesc desc);
 //    static PxHeightField CreateHeightField([Const, Ref] PxHeightFieldDesc desc);
-//    static readonly attribute unsigned long PHYSICS_VERSION;
-//};
+    static readonly attribute unsigned long PHYSICS_VERSION;
+};
 
 [Prefix="physx::"]
 interface PxTransform {
@@ -2548,12 +2548,12 @@ interface PxTriangleMesh {
 };
 PxTriangleMesh implements PxRefCounted;
 
-[Prefix="physx::"]
-interface PxTriangleMeshDesc {
-    void PxTriangleMeshDesc();
-    [Value] attribute PxU16StridedData materialIndices;
-};
-PxTriangleMeshDesc implements PxSimpleTriangleMesh;
+//[Prefix="physx::"]
+//interface PxTriangleMeshDesc {
+//    void PxTriangleMeshDesc();
+//    [Value] attribute PxU16StridedData materialIndices;
+//};
+//PxTriangleMeshDesc implements PxSimpleTriangleMesh;
 
 [Prefix="physx::"]
 interface PxTriangleMeshFlags {
