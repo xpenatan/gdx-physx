@@ -1,9 +1,9 @@
 import com.github.xpenatan.jparser.builder.BuildConfig;
 import com.github.xpenatan.jparser.builder.BuildMultiTarget;
 import com.github.xpenatan.jparser.builder.BuildTarget;
+import com.github.xpenatan.jparser.builder.DefaultBuildTarget;
 import com.github.xpenatan.jparser.builder.JBuilder;
 import com.github.xpenatan.jparser.builder.targets.AndroidTarget;
-import com.github.xpenatan.jparser.builder.targets.EmscriptenTarget;
 import com.github.xpenatan.jparser.builder.targets.WindowsMSVSTarget;
 import com.github.xpenatan.jparser.core.JParser;
 import com.github.xpenatan.jparser.core.util.FileHelper;
@@ -11,250 +11,214 @@ import com.github.xpenatan.jparser.cpp.CppCodeParser;
 import com.github.xpenatan.jparser.cpp.CppGenerator;
 import com.github.xpenatan.jparser.cpp.NativeCPPGenerator;
 import com.github.xpenatan.jparser.idl.IDLReader;
-import com.github.xpenatan.jparser.idl.parser.IDLDefaultCodeParser;
 import com.github.xpenatan.jparser.teavm.TeaVMCodeParser;
 import java.io.File;
 
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        generate();
+        generateAndBuild();
     }
 
-    public static void generate() throws Exception {
-        String basePackage = "physx";
-        String idlPath = new File("src/main/cpp/physx.idl").getCanonicalPath();
-        String cppSourceDir = new File("./build/physx/physx/").getCanonicalPath();
-        String baseJavaDir = new File(".").getAbsolutePath() + "./base/src/main/java";
-        IDLReader idlReader = IDLReader.readIDL(idlPath, cppSourceDir);
-
-//        generateClassOnly(idlReader, basePackage, baseJavaDir);
-        generateAndBuild(idlReader, basePackage, baseJavaDir, cppSourceDir, idlPath);
-    }
-
-    private static void generateClassOnly(
-            IDLReader idlReader,
-            String basePackage,
-            String baseJavaDir
-    ) throws Exception {
-        IDLDefaultCodeParser idlParser = new IDLDefaultCodeParser(basePackage, "C++", idlReader);
-        idlParser.generateClass = true;
-        String genDir = "../core/src/main/java";
-        JParser.generate(idlParser, baseJavaDir, genDir);
-    }
-
-    private static void generateAndBuild(
-            IDLReader idlReader,
-            String basePackage,
-            String baseJavaDir,
-            String cppSourceDir,
-            String idlPath
-    ) throws Exception {
+    private static void generateAndBuild() throws Exception {
         String libName = "physx";
+        String basePackage = "physx";
 
-        String libsDir = new File("./build/c++/libs/").getCanonicalPath();
-        String genDir = "../core/src/main/java";
-        String libBuildPath = new File("./build/c++/").getCanonicalPath();
-        String cppDestinationPath = libBuildPath + "/src";
+        String physxPath = new File("./../").getCanonicalPath().replace("\\", "/");
+        String physxBasePath = physxPath + "/base";
+        String physxBuildPath = physxPath + "/generator";
+        String physxCPPPath = physxPath + "/core";
+        String physxTeavmPath = physxPath + "/teavm";
+
+        String sourcePath = physxBuildPath + "/build/physx/physx/";
+        String idlPath = physxBuildPath + "/src/main/cpp/physx.idl";
+        IDLReader idlReader = IDLReader.readIDL(idlPath);
+
+        String cppBuildPath = physxBuildPath + "/build/c++";
+        String libsDir = cppBuildPath + "/libs/";
+
+        String cppDestinationPath = cppBuildPath + "/src";
         String libDestinationPath = cppDestinationPath + "/physx";
+        String baseJavaDir = physxBasePath + "/src/main/java";
 
-        FileHelper.copyDir(cppSourceDir, libDestinationPath);
+        FileHelper.copyDir(sourcePath, libDestinationPath);
         FileHelper.copyDir("src/main/cpp/custom", libDestinationPath);
 
         CppGenerator cppGenerator = new NativeCPPGenerator(libDestinationPath);
-        CppCodeParser cppParser = new CppCodeParser(cppGenerator, idlReader, basePackage);
+        CppCodeParser cppParser = new CppCodeParser(cppGenerator, idlReader, basePackage, sourcePath);
         cppParser.generateClass = true;
-        JParser.generate(cppParser, baseJavaDir, genDir);
+        JParser.generate(cppParser, baseJavaDir, physxCPPPath + "/src/main/java");
 
-        BuildConfig buildConfig = new BuildConfig(
-                cppDestinationPath,
-                libBuildPath,
-                libsDir,
-                libName
-        );
+        TeaVMCodeParser teavmParser = new TeaVMCodeParser(idlReader, libName, basePackage, sourcePath);
+        JParser.generate(teavmParser, baseJavaDir, physxTeavmPath + "/src/main/java");
 
-        String teaVMgenDir = "../teavm/src/main/java/";
-        TeaVMCodeParser teavmParser = new TeaVMCodeParser(idlReader, libName, basePackage);
-        JParser.generate(teavmParser, baseJavaDir, teaVMgenDir);
+        BuildConfig buildConfig = new BuildConfig(cppDestinationPath, cppBuildPath, libsDir, libName);
 
         JBuilder.build(
                 buildConfig,
-                getWindowBuildTarget()
+                getWindowBuildTarget(cppBuildPath)
 //                getEmscriptenBuildTarget(idlPath)
 //                getAndroidBuildTarget()
         );
     }
 
-    private static BuildMultiTarget getWindowBuildTarget() {
+    private static BuildMultiTarget getWindowBuildTarget(String cppBuildPath) {
         BuildMultiTarget multiTarget = new BuildMultiTarget();
 
-        boolean buildLibrary = false;
+        boolean buildLibrary = true;
 
         if(buildLibrary) {
             // TARGET FOUNDATION
 
             WindowsMSVSTarget foundationTarget = new WindowsMSVSTarget();
             foundationTarget.isStatic = true;
-            foundationTarget.addJNI = false;
             foundationTarget.libName = "foundation";
             foundationTarget.libSuffix = "64.lib";
             addIncludes(foundationTarget);
             foundationTarget.cppFlags.add("-D");
             foundationTarget.cppFlags.add("PhysXFoundation_EXPORTS");
-            foundationTarget.cppIncludes.add("**/src/physx/source/foundation/*.cpp");
-            foundationTarget.cppIncludes.add("**/src/physx/source/foundation/windows/*.cpp");
+            foundationTarget.cppInclude.add("**/src/physx/source/foundation/*.cpp");
+            foundationTarget.cppInclude.add("**/src/physx/source/foundation/windows/*.cpp");
             multiTarget.add(foundationTarget);
 
             // TARGET COMMON
 
             WindowsMSVSTarget commonTarget = new WindowsMSVSTarget();
             commonTarget.isStatic = true;
-            commonTarget.addJNI = false;
             commonTarget.libName = "common";
             commonTarget.libSuffix = "64.lib";
             addIncludes(commonTarget);
-            commonTarget.cppIncludes.add("**/src/physx/source/common/src/*.cpp");
-            commonTarget.cppIncludes.add("**/src/physx/source/common/src/windows/*.cpp");
+            commonTarget.cppInclude.add("**/src/physx/source/common/src/*.cpp");
+            commonTarget.cppInclude.add("**/src/physx/source/common/src/windows/*.cpp");
             commonTarget.cppFlags.add("-D");
             commonTarget.cppFlags.add("PhysXCommon_EXPORTS");
-            commonTarget.linkerFlags.add("../../libs/windows/foundation64.lib");
+            commonTarget.linkerFlags.add(cppBuildPath + "/libs/windows/foundation64.lib");
             multiTarget.add(commonTarget);
 
             // TARGET COOKING
 
             WindowsMSVSTarget cookingTarget = new WindowsMSVSTarget();
             cookingTarget.isStatic = true;
-            cookingTarget.addJNI = false;
             cookingTarget.libName = "cooking";
             cookingTarget.libSuffix = "64.lib";
             addIncludes(cookingTarget);
-            cookingTarget.cppIncludes.add("**/src/physx/source/physxcooking/src/**.cpp");
-            cookingTarget.linkerFlags.add("../../libs/windows/foundation64.lib");
-            cookingTarget.linkerFlags.add("../../libs/windows/common64.lib");
+            cookingTarget.cppInclude.add("**/src/physx/source/physxcooking/src/**.cpp");
+            cookingTarget.linkerFlags.add(cppBuildPath + "/libs/windows/foundation64.lib");
+            cookingTarget.linkerFlags.add(cppBuildPath + "/libs/windows/common64.lib");
             multiTarget.add(cookingTarget);
 
             // TARGET EXTENSIONS
 
             WindowsMSVSTarget extensionsTarget = new WindowsMSVSTarget();
             extensionsTarget.isStatic = true;
-            extensionsTarget.addJNI = false;
             extensionsTarget.libName = "extensions";
             extensionsTarget.libSuffix = "64.lib";
             addIncludes(extensionsTarget);
-            extensionsTarget.cppIncludes.add("**/src/physx/source/physxextensions/**.cpp");
+            extensionsTarget.cppInclude.add("**/src/physx/source/physxextensions/**.cpp");
             multiTarget.add(extensionsTarget);
 
             // TARGET VEHICLE
 
             WindowsMSVSTarget vehicleTarget = new WindowsMSVSTarget();
             vehicleTarget.isStatic = true;
-            vehicleTarget.addJNI = false;
             vehicleTarget.libName = "vehicle";
             vehicleTarget.libSuffix = "64.lib";
             addIncludes(vehicleTarget);
-            vehicleTarget.cppIncludes.add("**/src/physx/source/physxvehicle/**.cpp");
+            vehicleTarget.cppInclude.add("**/src/physx/source/physxvehicle/**.cpp");
             multiTarget.add(vehicleTarget);
 
             // TARGET VEHICLE 2
 
             WindowsMSVSTarget vehicle2Target = new WindowsMSVSTarget();
             vehicle2Target.isStatic = true;
-            vehicle2Target.addJNI = false;
             vehicle2Target.libName = "vehicle2";
             vehicle2Target.libSuffix = "64.lib";
             addIncludes(vehicle2Target);
-            vehicle2Target.cppIncludes.add("**/src/physx/source/physxvehicle2/**.cpp");
+            vehicle2Target.cppInclude.add("**/src/physx/source/physxvehicle2/**.cpp");
             multiTarget.add(vehicle2Target);
 
             // TARGET LOWLEVEL
 
             WindowsMSVSTarget lowLevelTarget = new WindowsMSVSTarget();
             lowLevelTarget.isStatic = true;
-            lowLevelTarget.addJNI = false;
             lowLevelTarget.libName = "lowlevel";
             lowLevelTarget.libSuffix = "64.lib";
             addIncludes(lowLevelTarget);
-            lowLevelTarget.cppIncludes.add("**/src/physx/source/lowlevel/software/src/**.cpp");
-            lowLevelTarget.cppIncludes.add("**/src/physx/source/lowlevel/common/src/**.cpp");
-            lowLevelTarget.cppIncludes.add("**/src/physx/source/lowlevel/software/src/**.cpp");
+            lowLevelTarget.cppInclude.add("**/src/physx/source/lowlevel/software/src/**.cpp");
+            lowLevelTarget.cppInclude.add("**/src/physx/source/lowlevel/common/src/**.cpp");
+            lowLevelTarget.cppInclude.add("**/src/physx/source/lowlevel/software/src/**.cpp");
             multiTarget.add(lowLevelTarget);
 
             // TARGET LOWLEVELAABB
 
             WindowsMSVSTarget lowLevelAABBTarget = new WindowsMSVSTarget();
             lowLevelAABBTarget.isStatic = true;
-            lowLevelAABBTarget.addJNI = false;
             lowLevelAABBTarget.libName = "lowlevelAABB";
             lowLevelAABBTarget.libSuffix = "64.lib";
             addIncludes(lowLevelAABBTarget);
-            lowLevelAABBTarget.cppIncludes.add("**/src/physx/source/lowlevelaabb/src/**.cpp");
+            lowLevelAABBTarget.cppInclude.add("**/src/physx/source/lowlevelaabb/src/**.cpp");
             multiTarget.add(lowLevelAABBTarget);
 
             // TARGET LOWLEVELDYNAMICS
 
             WindowsMSVSTarget lowLevelDynamicsTarget = new WindowsMSVSTarget();
             lowLevelDynamicsTarget.isStatic = true;
-            lowLevelDynamicsTarget.addJNI = false;
             lowLevelDynamicsTarget.libName = "lowlevelDynamics";
             lowLevelDynamicsTarget.libSuffix = "64.lib";
             addIncludes(lowLevelDynamicsTarget);
-            lowLevelDynamicsTarget.cppIncludes.add("**/src/physx/source/lowleveldynamics/src/**.cpp");
+            lowLevelDynamicsTarget.cppInclude.add("**/src/physx/source/lowleveldynamics/src/**.cpp");
             multiTarget.add(lowLevelDynamicsTarget);
 
             // TARGET SCENEQUERY
 
             WindowsMSVSTarget sceneQueryTarget = new WindowsMSVSTarget();
             sceneQueryTarget.isStatic = true;
-            sceneQueryTarget.addJNI = false;
             sceneQueryTarget.libName = "scenequery";
             sceneQueryTarget.libSuffix = "64.lib";
             addIncludes(sceneQueryTarget);
-            sceneQueryTarget.cppIncludes.add("**/src/physx/source/scenequery/src/**.cpp");
+            sceneQueryTarget.cppInclude.add("**/src/physx/source/scenequery/src/**.cpp");
             multiTarget.add(sceneQueryTarget);
 
             // TARGET SIMULATIONCONTROLLER
 
             WindowsMSVSTarget simulationControllerTarget = new WindowsMSVSTarget();
             simulationControllerTarget.isStatic = true;
-            simulationControllerTarget.addJNI = false;
             simulationControllerTarget.libName = "simulationcontroller";
             simulationControllerTarget.libSuffix = "64.lib";
             addIncludes(simulationControllerTarget);
-            simulationControllerTarget.cppIncludes.add("**/src/physx/source/simulationcontroller/src/**.cpp");
+            simulationControllerTarget.cppInclude.add("**/src/physx/source/simulationcontroller/src/**.cpp");
             multiTarget.add(simulationControllerTarget);
 
             // TARGET PHYSXPVDSDK
 
             WindowsMSVSTarget physXPvdSDKTarget = new WindowsMSVSTarget();
             physXPvdSDKTarget.isStatic = true;
-            physXPvdSDKTarget.addJNI = false;
             physXPvdSDKTarget.libName = "pvd";
             physXPvdSDKTarget.libSuffix = "64.lib";
             addIncludes(physXPvdSDKTarget);
-            physXPvdSDKTarget.cppIncludes.add("**/src/physx/source/pvd/src/**.cpp");
+            physXPvdSDKTarget.cppInclude.add("**/src/physx/source/pvd/src/**.cpp");
             multiTarget.add(physXPvdSDKTarget);
 
             // TARGET PHYSX
 
             WindowsMSVSTarget physxTarget = new WindowsMSVSTarget();
             physxTarget.isStatic = true;
-            physxTarget.addJNI = false;
             physxTarget.libName = "physx";
             physxTarget.libSuffix = "64.lib";
             addIncludes(physxTarget);
-            physxTarget.cppIncludes.add("**/src/physx/source/physx/src/*.cpp");
-            physxTarget.cppIncludes.add("**/src/physx/source/physx/src/windows/**.cpp");
-            physxTarget.cppIncludes.add("**/src/physx/source/physx/src/omnipvd/**.cpp");
-            physxTarget.cppIncludes.add("**/src/physx/source/physx/src/gpu/**.cpp");
-            physxTarget.cppIncludes.add("**/src/physx/source/physx/src/device/windows/**.cpp");
+            physxTarget.cppInclude.add("**/src/physx/source/physx/src/*.cpp");
+            physxTarget.cppInclude.add("**/src/physx/source/physx/src/windows/**.cpp");
+            physxTarget.cppInclude.add("**/src/physx/source/physx/src/omnipvd/**.cpp");
+            physxTarget.cppInclude.add("**/src/physx/source/physx/src/gpu/**.cpp");
+            physxTarget.cppInclude.add("**/src/physx/source/physx/src/device/windows/**.cpp");
             multiTarget.add(physxTarget);
         }
 
-
         WindowsMSVSTarget glueTarget = new WindowsMSVSTarget();
+        glueTarget.addJNIHeaders();
         addIncludes(glueTarget);
         glueTarget.headerDirs.add("-Isrc/physx/");
-        glueTarget.cppIncludes.add("**/src/physx/*.cpp");
+        glueTarget.cppInclude.add("**/src/physx/*.cpp");
         glueTarget.linkerFlags.add("../../libs/windows/common64.lib");
         glueTarget.linkerFlags.add("../../libs/windows/extensions64.lib");
         glueTarget.linkerFlags.add("../../libs/windows/foundation64.lib");
@@ -272,7 +236,7 @@ public class Main {
         return multiTarget;
     }
 
-    public static void addIncludeDirs(BuildTarget target) {
+    public static void addIncludeDirs(DefaultBuildTarget target) {
         target.headerDirs.add("-Isrc/physx/include");
         target.headerDirs.add("-Isrc/physx/source/common/include");
         target.headerDirs.add("-Isrc/physx/source/common/src");
@@ -320,7 +284,7 @@ public class Main {
         target.headerDirs.add("-Isrc/physx/source/foundation/include");
     }
 
-    private static void addFlags(BuildTarget target) {
+    private static void addFlags(DefaultBuildTarget target) {
         target.cppFlags.add("-D");
         target.cppFlags.add("_DEBUG");
         target.cppFlags.add("-D");
@@ -343,7 +307,7 @@ public class Main {
         target.cppFlags.add("_WINSOCK_DEPRECATED_NO_WARNINGS");
     }
 
-    private static void addIncludes(BuildTarget target) {
+    private static void addIncludes(DefaultBuildTarget target) {
         addIncludeDirs(target);
         addFlags(target);
         target.cppFlags.add("-WX");
@@ -376,35 +340,35 @@ public class Main {
     private static BuildMultiTarget getEmscriptenBuildTarget(String idlPath) {
         BuildMultiTarget multiTarget = new BuildMultiTarget();
 
-        EmscriptenTarget teaVMTarget = new EmscriptenTarget(idlPath);
-        teaVMTarget.headerDirs.add("-includesrc/physx/PhysxCustom.h");
-
-        teaVMTarget.cppIncludes.add("**/src/physx/source/foundation/*.cpp");
-        teaVMTarget.cppIncludes.add("**/src/physx/source/foundation/unix/*.cpp");
-
-        teaVMTarget.cppFlags.add("-D");
-        teaVMTarget.cppFlags.add("__EMSCRIPTEN__");
-        teaVMTarget.cppFlags.add("-D");
-        teaVMTarget.cppFlags.add("PX_EMSCRIPTEN");
-
-        addIncludeDirs(teaVMTarget);
-        addFlags(teaVMTarget);
-
-        teaVMTarget.cppIncludes.add("**/src/physx/source/common/src/*.cpp");
-        teaVMTarget.cppIncludes.add("**/src/physx/source/lowlevel/software/src/**.cpp");
-        teaVMTarget.cppIncludes.add("**/src/physx/source/lowlevel/common/src/**.cpp");
-        teaVMTarget.cppIncludes.add("**/src/physx/source/lowlevel/software/src/**.cpp");
-        teaVMTarget.cppIncludes.add("**/src/physx/source/lowlevelaabb/src/**.cpp");
-        teaVMTarget.cppIncludes.add("**/src/physx/source/lowleveldynamics/src/**.cpp");
-        teaVMTarget.cppIncludes.add("**/src/physx/source/scenequery/src/**.cpp");
-        teaVMTarget.cppIncludes.add("**/src/physx/source/simulationcontroller/src/**.cpp");
-        teaVMTarget.cppIncludes.add("**/src/physx/source/pvd/src/**.cpp");
-        teaVMTarget.cppIncludes.add("**/src/physx/source/physx/src/*.cpp");
-        teaVMTarget.cppIncludes.add("**/src/physx/source/physx/src/omnipvd/**.cpp");
-        teaVMTarget.cppIncludes.add("**/src/physx/source/physx/src/gpu/**.cpp");
-        teaVMTarget.cppIncludes.add("**/src/physx/source/physx/src/device/linux/**.cpp");
-
-        multiTarget.add(teaVMTarget);
+//        EmscriptenTarget teaVMTarget = new EmscriptenTarget(idlPath);
+//        teaVMTarget.headerDirs.add("-includesrc/physx/PhysxCustom.h");
+//
+//        teaVMTarget.cppInclude.add("**/src/physx/source/foundation/*.cpp");
+//        teaVMTarget.cppInclude.add("**/src/physx/source/foundation/unix/*.cpp");
+//
+//        teaVMTarget.cppFlags.add("-D");
+//        teaVMTarget.cppFlags.add("__EMSCRIPTEN__");
+//        teaVMTarget.cppFlags.add("-D");
+//        teaVMTarget.cppFlags.add("PX_EMSCRIPTEN");
+//
+//        addIncludeDirs(teaVMTarget);
+//        addFlags(teaVMTarget);
+//
+//        teaVMTarget.cppInclude.add("**/src/physx/source/common/src/*.cpp");
+//        teaVMTarget.cppInclude.add("**/src/physx/source/lowlevel/software/src/**.cpp");
+//        teaVMTarget.cppInclude.add("**/src/physx/source/lowlevel/common/src/**.cpp");
+//        teaVMTarget.cppInclude.add("**/src/physx/source/lowlevel/software/src/**.cpp");
+//        teaVMTarget.cppInclude.add("**/src/physx/source/lowlevelaabb/src/**.cpp");
+//        teaVMTarget.cppInclude.add("**/src/physx/source/lowleveldynamics/src/**.cpp");
+//        teaVMTarget.cppInclude.add("**/src/physx/source/scenequery/src/**.cpp");
+//        teaVMTarget.cppInclude.add("**/src/physx/source/simulationcontroller/src/**.cpp");
+//        teaVMTarget.cppInclude.add("**/src/physx/source/pvd/src/**.cpp");
+//        teaVMTarget.cppInclude.add("**/src/physx/source/physx/src/*.cpp");
+//        teaVMTarget.cppInclude.add("**/src/physx/source/physx/src/omnipvd/**.cpp");
+//        teaVMTarget.cppInclude.add("**/src/physx/source/physx/src/gpu/**.cpp");
+//        teaVMTarget.cppInclude.add("**/src/physx/source/physx/src/device/linux/**.cpp");
+//
+//        multiTarget.add(teaVMTarget);
         return multiTarget;
     }
 
