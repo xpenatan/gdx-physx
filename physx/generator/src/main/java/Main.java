@@ -31,6 +31,7 @@ public class Main {
         String physxTeavmPath = physxPath + "/teavm";
 
         String sourcePath = physxBuildPath + "/build/physx/physx/";
+        String sourceInclude = sourcePath + "/include";
         String idlPath = physxBuildPath + "/src/main/cpp/physx.idl";
         IDLReader idlReader = IDLReader.readIDL(idlPath);
 
@@ -45,11 +46,11 @@ public class Main {
         FileHelper.copyDir("src/main/cpp/custom", libDestinationPath);
 
         CppGenerator cppGenerator = new NativeCPPGenerator(libDestinationPath);
-        CppCodeParser cppParser = new CppCodeParser(cppGenerator, idlReader, basePackage, sourcePath);
+        CppCodeParser cppParser = new CppCodeParser(cppGenerator, idlReader, basePackage, sourceInclude);
         cppParser.generateClass = true;
         JParser.generate(cppParser, baseJavaDir, physxCPPPath + "/src/main/java");
 
-        TeaVMCodeParser teavmParser = new TeaVMCodeParser(idlReader, libName, basePackage, sourcePath);
+        TeaVMCodeParser teavmParser = new TeaVMCodeParser(idlReader, libName, basePackage, sourceInclude);
         JParser.generate(teavmParser, baseJavaDir, physxTeavmPath + "/src/main/java");
 
         BuildConfig buildConfig = new BuildConfig(cppDestinationPath, cppBuildPath, libsDir, libName);
