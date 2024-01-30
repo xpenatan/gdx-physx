@@ -66,7 +66,7 @@ public class Main {
     private static BuildMultiTarget getWindowBuildTarget(String cppBuildPath) {
         BuildMultiTarget multiTarget = new BuildMultiTarget();
 
-        boolean buildLibrary = false;
+        boolean buildLibrary = true;
 
         if(buildLibrary) {
             // TARGET FOUNDATION
@@ -91,9 +91,9 @@ public class Main {
             addIncludes(commonTarget);
             commonTarget.cppInclude.add("**/src/physx/source/common/src/*.cpp");
             commonTarget.cppInclude.add("**/src/physx/source/common/src/windows/*.cpp");
+            commonTarget.cppInclude.add("**/src/physx/source/geomutils/src/**.cpp");
             commonTarget.cppFlags.add("-D");
             commonTarget.cppFlags.add("PhysXCommon_EXPORTS");
-            commonTarget.linkerFlags.add(cppBuildPath + "/libs/windows/foundation64.lib");
             multiTarget.add(commonTarget);
 
             // TARGET COOKING
@@ -103,10 +103,19 @@ public class Main {
             cookingTarget.libName = "cooking";
             cookingTarget.libSuffix = "64.lib";
             addIncludes(cookingTarget);
-            cookingTarget.cppInclude.add("**/src/physx/source/physxcooking/src/**.cpp");
-            cookingTarget.linkerFlags.add(cppBuildPath + "/libs/windows/foundation64.lib");
-            cookingTarget.linkerFlags.add(cppBuildPath + "/libs/windows/common64.lib");
+            cookingTarget.cppInclude.add("**/src/physx/source/physxcooking/src/*.cpp");
+            cookingTarget.cppInclude.add("**/src/physx/source/physxcooking/src/windows/*.cpp");
             multiTarget.add(cookingTarget);
+
+            // TARGET TASK
+
+            WindowsMSVSTarget taskTarget = new WindowsMSVSTarget();
+            taskTarget.isStatic = true;
+            taskTarget.libName = "task";
+            taskTarget.libSuffix = "64.lib";
+            addIncludes(taskTarget);
+            taskTarget.cppInclude.add("**/src/physx/source/task/src/*.cpp");
+            multiTarget.add(taskTarget);
 
             // TARGET EXTENSIONS
 
@@ -147,7 +156,7 @@ public class Main {
             addIncludes(lowLevelTarget);
             lowLevelTarget.cppInclude.add("**/src/physx/source/lowlevel/software/src/**.cpp");
             lowLevelTarget.cppInclude.add("**/src/physx/source/lowlevel/common/src/**.cpp");
-            lowLevelTarget.cppInclude.add("**/src/physx/source/lowlevel/software/src/**.cpp");
+            lowLevelTarget.cppInclude.add("**/src/physx/source/lowlevel/api/src/**.cpp");
             multiTarget.add(lowLevelTarget);
 
             // TARGET LOWLEVELAABB
@@ -204,7 +213,7 @@ public class Main {
 
             WindowsMSVSTarget physxTarget = new WindowsMSVSTarget();
             physxTarget.isStatic = true;
-            physxTarget.libName = "physx";
+            physxTarget.libName = "core";
             physxTarget.libSuffix = "64.lib";
             addIncludes(physxTarget);
             physxTarget.cppInclude.add("**/src/physx/source/physx/src/*.cpp");
@@ -212,6 +221,7 @@ public class Main {
             physxTarget.cppInclude.add("**/src/physx/source/physx/src/omnipvd/**.cpp");
             physxTarget.cppInclude.add("**/src/physx/source/physx/src/gpu/**.cpp");
             physxTarget.cppInclude.add("**/src/physx/source/physx/src/device/windows/**.cpp");
+            physxTarget.cppInclude.add("**/src/physx/source/physxmetadata/core/src/*.cpp");
             multiTarget.add(physxTarget);
         }
 
@@ -221,7 +231,9 @@ public class Main {
         glueTarget.headerDirs.add("-Isrc/physx/");
         glueTarget.cppInclude.add("**/src/physx/*.cpp");
         glueTarget.cppInclude.add(cppBuildPath + "/src/jniglue/JNIGlue.cpp");
+        glueTarget.linkerFlags.add(cppBuildPath + "/libs/windows/core64.lib");
         glueTarget.linkerFlags.add(cppBuildPath + "/libs/windows/common64.lib");
+        glueTarget.linkerFlags.add(cppBuildPath + "/libs/windows/task64.lib");
         glueTarget.linkerFlags.add(cppBuildPath + "/libs/windows/extensions64.lib");
         glueTarget.linkerFlags.add(cppBuildPath + "/libs/windows/foundation64.lib");
         glueTarget.linkerFlags.add(cppBuildPath + "/libs/windows/lowlevel64.lib");
@@ -233,7 +245,6 @@ public class Main {
         glueTarget.linkerFlags.add(cppBuildPath + "/libs/windows/vehicle64.lib");
         glueTarget.linkerFlags.add(cppBuildPath + "/libs/windows/vehicle264.lib");
         glueTarget.linkerFlags.add(cppBuildPath + "/libs/windows/cooking64.lib");
-
         multiTarget.add(glueTarget);
 
         return multiTarget;
@@ -313,7 +324,6 @@ public class Main {
     private static void addIncludes(DefaultBuildTarget target) {
         addIncludeDirs(target);
         addFlags(target);
-        target.cppFlags.add("-WX");
         target.cppFlags.add("-W4");
         target.cppFlags.add("/wd 4514");
         target.cppFlags.add("/wd 4820");

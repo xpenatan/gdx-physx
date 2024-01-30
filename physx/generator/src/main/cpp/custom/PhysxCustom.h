@@ -8,6 +8,7 @@
 #include "common/PxRenderOutput.h"
 #include "extensions/PxCollectionExt.h"
 #include "extensions/PxGjkQueryExt.h"
+#include "extensions/PxTetMakerExt.h"
 #include "geomutils/PxContactBuffer.h"
 
 #include "omnipvd/PxOmniPvd.h"
