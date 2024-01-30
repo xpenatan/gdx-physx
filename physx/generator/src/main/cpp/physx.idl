@@ -1,3 +1,207 @@
+// Custom Class
+////interface PxGjkQuery {
+////    static boolean proximityInfo([Const, Ref] Support a, [Const, Ref] Support b, [Const, Ref] PxTransform poseA, [Const, Ref] PxTransform poseB, float contactDistance, float toleranceLength, [Ref] PxGjkQueryProximityInfoResult result);
+////    static boolean raycast([Const, Ref] Support shape, [Const, Ref] PxTransform pose, [Const, Ref] PxVec3 rayStart, [Const, Ref] PxVec3 unitDir, float maxDist, [Ref] PxGjkQueryRaycastResult result);
+////    static boolean overlap([Const, Ref] Support a, [Const, Ref] Support b, [Const, Ref] PxTransform poseA, [Const, Ref] PxTransform poseB);
+////    static boolean sweep([Const, Ref] Support a, [Const, Ref] Support b, [Const, Ref] PxTransform poseA, [Const, Ref] PxTransform poseB, [Const, Ref] PxVec3 unitDir, float maxDist, [Ref] PxGjkQuerySweepResult result);
+////};
+//
+// Custom Class
+////interface CustomSupport {
+////    float getCustomMargin();
+////    void getCustomSupportLocal([Const, Ref] PxVec3 dir, [Ref] PxVec3 result);
+////};
+////CustomSupport implements Support;
+////
+////[JSImplementation="CustomSupport"]
+////interface CustomSupportImpl {
+////    void CustomSupportImpl();
+////    float getCustomMargin();
+////    void getCustomSupportLocal([Const, Ref] PxVec3 dir, [Ref] PxVec3 result);
+////};
+//
+
+// Custom Class
+////[NoDelete]
+////interface PxExtensionTopLevelFunctions {
+////    static PxRigidStatic CreatePlane([Ref] PxPhysics sdk, [Const, Ref] PxPlane plane, [Ref] PxMaterial material, [Const, Ref] PxFilterData filterData);
+////};
+
+// Custom Class
+////interface PxGjkQueryProximityInfoResult {
+////    void PxGjkQueryProximityInfoResult();
+////    attribute boolean success;
+////    [Value] attribute PxVec3 pointA;
+////    [Value] attribute PxVec3 pointB;
+////    [Value] attribute PxVec3 separatingAxis;
+////    attribute float separation;
+////};
+// Custom Class
+////interface PxGjkQueryRaycastResult {
+////    void PxGjkQueryRaycastResult();
+////    attribute boolean success;
+////    attribute float t;
+////    [Value] attribute PxVec3 n;
+////    [Value] attribute PxVec3 p;
+////};
+// Custom Class
+////interface PxGjkQuerySweepResult {
+////    void PxGjkQuerySweepResult();
+////    attribute boolean success;
+////    attribute float t;
+////    [Value] attribute PxVec3 n;
+////    [Value] attribute PxVec3 p;
+////};
+
+// Custom Class
+[NoDelete]
+interface PxTopLevelFunctions {
+//    [Value] static PxSimulationFilterShader DefaultFilterShader();
+//    static void setupPassThroughFilterShader(PxSceneDesc sceneDesc, PassThroughFilterShader filterShader);
+//    static PxControllerManager CreateControllerManager([Ref] PxScene scene, optional boolean lockingEnabled);
+//    static PxFoundation CreateFoundation(unsigned long version, [Ref] PxDefaultAllocator allocator, [Ref] PxErrorCallback errorCallback);
+//    static PxPhysics CreatePhysics(unsigned long version, [Ref] PxFoundation foundation, [Const, Ref] PxTolerancesScale params, optional PxPvd pvd, optional PxOmniPvd omniPvd);
+//    static PxDefaultCpuDispatcher DefaultCpuDispatcherCreate(unsigned long numThreads);
+//    static boolean InitExtensions([Ref] PxPhysics physics);
+//    static void CloseExtensions();
+//    static PxPvd CreatePvd([Ref] PxFoundation foundation);
+//    static PxD6Joint D6JointCreate([Ref] PxPhysics physics, PxRigidActor actor0, [Ref] PxTransform localFrame0, PxRigidActor actor1, [Ref] PxTransform localFrame1);
+//    static PxDistanceJoint DistanceJointCreate([Ref] PxPhysics physics, PxRigidActor actor0, [Ref] PxTransform localFrame0, PxRigidActor actor1, [Ref] PxTransform localFrame1);
+//    static PxFixedJoint FixedJointCreate([Ref] PxPhysics physics, PxRigidActor actor0, [Ref] PxTransform localFrame0, PxRigidActor actor1, [Ref] PxTransform localFrame1);
+//    static PxPrismaticJoint PrismaticJointCreate([Ref] PxPhysics physics, PxRigidActor actor0, [Ref] PxTransform localFrame0, PxRigidActor actor1, [Ref] PxTransform localFrame1);
+//    static PxRevoluteJoint RevoluteJointCreate([Ref] PxPhysics physics, PxRigidActor actor0, [Ref] PxTransform localFrame0, PxRigidActor actor1, [Ref] PxTransform localFrame1);
+//    static PxSphericalJoint SphericalJointCreate([Ref] PxPhysics physics, PxRigidActor actor0, [Ref] PxTransform localFrame0, PxRigidActor actor1, [Ref] PxTransform localFrame1);
+//    static PxConvexMesh CreateConvexMesh([Const, Ref] PxCookingParams params, [Const, Ref] PxConvexMeshDesc desc);
+//    static PxTriangleMesh CreateTriangleMesh([Const, Ref] PxCookingParams params, [Const, Ref] PxTriangleMeshDesc desc);
+//    static PxHeightField CreateHeightField([Const, Ref] PxHeightFieldDesc desc);
+    static readonly attribute unsigned long PHYSICS_VERSION;
+};
+
+// Custom Class
+//[NoDelete]
+//interface PxVehicleTireForceParamsExt {
+//    static void setFrictionVsSlip(PxVehicleTireForceParams tireForceParams, unsigned long i, unsigned long j, float value);
+//    static void setLoadFilter(PxVehicleTireForceParams tireForceParams, unsigned long i, unsigned long j, float value);
+//};
+
+// Custom Class
+//interface SimpleSimulationEventCallback {
+//    void onConstraintBreak(PxConstraintInfo constraints, unsigned long count);
+//    void onWake(PxActorPtr actors, unsigned long count);
+//    void onSleep(PxActorPtr actors, unsigned long count);
+//    void onContact([Const, Ref] PxContactPairHeader pairHeader, [Const] PxContactPair pairs, unsigned long nbPairs);
+//    void onTrigger(PxTriggerPair pairs, unsigned long count);
+//};
+//SimpleSimulationEventCallback implements PxSimulationEventCallback;
+
+// Custom Class
+//interface SimpleControllerBehaviorCallback {
+//    unsigned long getShapeBehaviorFlags([Const, Ref] PxShape shape, [Const, Ref] PxActor actor);
+//    unsigned long getControllerBehaviorFlags([Const, Ref] PxController controller);
+//    unsigned long getObstacleBehaviorFlags([Const, Ref] PxObstacle obstacle);
+//};
+//SimpleControllerBehaviorCallback implements PxControllerBehaviorCallback;
+
+////[JSImplementation="SimpleControllerBehaviorCallback"]
+////interface PxControllerBehaviorCallbackImpl {
+////    void PxControllerBehaviorCallbackImpl();
+////    unsigned long getShapeBehaviorFlags([Const, Ref] PxShape shape, [Const, Ref] PxActor actor);
+////    unsigned long getControllerBehaviorFlags([Const, Ref] PxController controller);
+////    unsigned long getObstacleBehaviorFlags([Const, Ref] PxObstacle obstacle);
+////};
+//
+
+//Custom Class
+//interface SimplePvdTransport {
+//    void send(any inBytes, unsigned long inLength);
+//};
+//SimplePvdTransport implements PxPvdTransport;
+
+//[JSImplementation="SimplePvdTransport"]
+//interface SimplPvdTransportImpl {
+//    void SimplPvdTransportImpl();
+//    boolean connect();
+//    boolean isConnected();
+//    void disconnect();
+//    void send(any inBytes, unsigned long inLength);
+//    void flush();
+//};
+
+// CustomClass
+//interface SimpleQueryFilterCallback {
+//    unsigned long simplePreFilter([Const, Ref] PxFilterData filterData, [Const] PxShape shape, [Const] PxRigidActor actor, [Ref] PxHitFlags queryFlags);
+//    unsigned long simplePostFilter([Const, Ref] PxFilterData filterData, [Const, Ref] PxQueryHit hit, [Const] PxShape shape, [Const] PxRigidActor actor);
+//};
+//SimpleQueryFilterCallback implements PxQueryFilterCallback;
+
+////[JSImplementation="SimpleQueryFilterCallback"]
+////interface PxQueryFilterCallbackImpl {
+////    void PxQueryFilterCallbackImpl();
+////    unsigned long simplePreFilter([Const, Ref] PxFilterData filterData, [Const] PxShape shape, [Const] PxRigidActor actor, [Ref] PxHitFlags queryFlags);
+////    unsigned long simplePostFilter([Const, Ref] PxFilterData filterData, [Const, Ref] PxQueryHit hit, [Const] PxShape shape, [Const] PxRigidActor actor);
+////};
+
+// Custom Class
+////interface NativeArrayHelpers {
+////    static octet getU8At([Ref] PxU8ConstPtr base, long index);
+////    static unsigned short getU16At([Ref] PxU16ConstPtr base, long index);
+////    static unsigned long getU32At([Ref] PxU32ConstPtr base, long index);
+////    static float getRealAt([Ref] PxRealPtr base, long index);
+////    static void setU8At(VoidPtr base, long index, octet value);
+////    static void setU16At(VoidPtr base, long index, unsigned short value);
+////    static void setU32At(VoidPtr base, long index, unsigned long value);
+////    static void setRealAt(VoidPtr base, long index, float value);
+////    [Value] static PxU8Ptr voidToU8Ptr(VoidPtr voidPtr);
+////    [Value] static PxU16Ptr voidToU16Ptr(VoidPtr voidPtr);
+////    [Value] static PxU32Ptr voidToU32Ptr(VoidPtr voidPtr);
+////    [Value] static PxRealPtr voidToRealPtr(VoidPtr voidPtr);
+////    static PxActor getActorAt(PxActor base, long index);
+////    static PxBounds3 getBounds3At(PxBounds3 base, long index);
+////    static PxContactPair getContactPairAt(PxContactPair base, long index);
+////    static PxContactPairHeader getContactPairHeaderAt(PxContactPairHeader base, long index);
+////    static PxController getControllerAt(PxController base, long index);
+////    static PxControllerShapeHit getControllerShapeHitAt(PxControllerShapeHit base, long index);
+////    static PxControllersHit getControllersHitAt(PxControllersHit base, long index);
+////    static PxControllerObstacleHit getControllerObstacleHitAt(PxControllerObstacleHit base, long index);
+////    static PxDebugPoint getDebugPointAt(PxDebugPoint base, long index);
+////    static PxDebugLine getDebugLineAt(PxDebugLine base, long index);
+////    static PxDebugTriangle getDebugTriangleAt(PxDebugTriangle base, long index);
+////    static PxObstacle getObstacleAt(PxObstacle base, long index);
+////    static PxShape getShapeAt(PxShape base, long index);
+////    static PxTriggerPair getTriggerPairAt(PxTriggerPair base, long index);
+////    static PxVec3 getVec3At(PxVec3 base, long index);
+////};
+
+// CUSTOM CLASS
+////interface PassThroughFilterShader {
+////    unsigned long filterShader(unsigned long attributes0, unsigned long filterData0w0, unsigned long filterData0w1, unsigned long filterData0w2, unsigned long filterData0w3, unsigned long attributes1, unsigned long filterData1w0, unsigned long filterData1w1, unsigned long filterData1w2, unsigned long filterData1w3);
+////    attribute unsigned long outputPairFlags;
+////};
+////PassThroughFilterShader implements PxSimulationFilterShader;
+
+//Custom class
+//interface SupportFunctions {
+//    static PxShape PxActor_getShape([Ref] PxRigidActor actor, long index);
+//    [Ref] static Vector_PxActorPtr PxScene_getActiveActors(PxScene scene);
+//    static unsigned long PxArticulationReducedCoordinate_getMinSolverPositionIterations(PxArticulationReducedCoordinate articulation);
+//    static unsigned long PxArticulationReducedCoordinate_getMinSolverVelocityIterations(PxArticulationReducedCoordinate articulation);
+//};
+
+// Custom Class
+//[NoDelete]
+//interface PxVehicleTopLevelFunctions {
+//    static boolean InitVehicleExtension([Ref] PxFoundation foundation);
+//    static void CloseVehicleExtension();
+//    static boolean VehicleComputeSprungMasses(unsigned long nbSprungMasses, [Const, Ref] Vector_PxVec3 sprungMassCoordinates, float totalMass, PxVehicleAxesEnum gravityDirection, [Ref] Vector_PxReal sprungMasses);
+//    static PxConvexMesh VehicleUnitCylinderSweepMeshCreate([Const, Ref] PxVehicleFrame vehicleFrame, [Ref] PxPhysics physics, [Const, Ref] PxCookingParams params);
+//    static void VehicleUnitCylinderSweepMeshDestroy(PxConvexMesh mesh);
+//    static readonly attribute unsigned long MAX_NB_ENGINE_TORQUE_CURVE_ENTRIES;
+//};
+
+
+// #############################
+
+
 //[NoDelete]
 //interface PhysxHelper {
 //};
@@ -96,20 +300,7 @@
 ////    attribute float margin;
 ////};
 ////ConvexMeshSupport implements Support;
-//
-////interface CustomSupport {
-////    float getCustomMargin();
-////    void getCustomSupportLocal([Const, Ref] PxVec3 dir, [Ref] PxVec3 result);
-////};
-////CustomSupport implements Support;
-////
-////[JSImplementation="CustomSupport"]
-////interface CustomSupportImpl {
-////    void CustomSupportImpl();
-////    float getCustomMargin();
-////    void getCustomSupportLocal([Const, Ref] PxVec3 dir, [Ref] PxVec3 result);
-////};
-//
+
 ////[Prefix="snippetvehicle2::"]
 ////interface DirectDriveVehicle {
 ////    void DirectDriveVehicle();
@@ -177,42 +368,6 @@
 ////    [Value] attribute PxVehicleGearboxState gearboxState;
 ////    [Value] attribute PxVehicleClutchSlipState clutchState;
 ////};
-////
-////interface NativeArrayHelpers {
-////    static octet getU8At([Ref] PxU8ConstPtr base, long index);
-////    static unsigned short getU16At([Ref] PxU16ConstPtr base, long index);
-////    static unsigned long getU32At([Ref] PxU32ConstPtr base, long index);
-////    static float getRealAt([Ref] PxRealPtr base, long index);
-////    static void setU8At(VoidPtr base, long index, octet value);
-////    static void setU16At(VoidPtr base, long index, unsigned short value);
-////    static void setU32At(VoidPtr base, long index, unsigned long value);
-////    static void setRealAt(VoidPtr base, long index, float value);
-////    [Value] static PxU8Ptr voidToU8Ptr(VoidPtr voidPtr);
-////    [Value] static PxU16Ptr voidToU16Ptr(VoidPtr voidPtr);
-////    [Value] static PxU32Ptr voidToU32Ptr(VoidPtr voidPtr);
-////    [Value] static PxRealPtr voidToRealPtr(VoidPtr voidPtr);
-////    static PxActor getActorAt(PxActor base, long index);
-////    static PxBounds3 getBounds3At(PxBounds3 base, long index);
-////    static PxContactPair getContactPairAt(PxContactPair base, long index);
-////    static PxContactPairHeader getContactPairHeaderAt(PxContactPairHeader base, long index);
-////    static PxController getControllerAt(PxController base, long index);
-////    static PxControllerShapeHit getControllerShapeHitAt(PxControllerShapeHit base, long index);
-////    static PxControllersHit getControllersHitAt(PxControllersHit base, long index);
-////    static PxControllerObstacleHit getControllerObstacleHitAt(PxControllerObstacleHit base, long index);
-////    static PxDebugPoint getDebugPointAt(PxDebugPoint base, long index);
-////    static PxDebugLine getDebugLineAt(PxDebugLine base, long index);
-////    static PxDebugTriangle getDebugTriangleAt(PxDebugTriangle base, long index);
-////    static PxObstacle getObstacleAt(PxObstacle base, long index);
-////    static PxShape getShapeAt(PxShape base, long index);
-////    static PxTriggerPair getTriggerPairAt(PxTriggerPair base, long index);
-////    static PxVec3 getVec3At(PxVec3 base, long index);
-////};
-//
-////interface PassThroughFilterShader {
-////    unsigned long filterShader(unsigned long attributes0, unsigned long filterData0w0, unsigned long filterData0w1, unsigned long filterData0w2, unsigned long filterData0w3, unsigned long attributes1, unsigned long filterData1w0, unsigned long filterData1w1, unsigned long filterData1w2, unsigned long filterData1w3);
-////    attribute unsigned long outputPairFlags;
-////};
-////PassThroughFilterShader implements PxSimulationFilterShader;
 ////
 ////[JSImplementation="PassThroughFilterShader"]
 ////interface PassThroughFilterShaderImpl {
@@ -895,48 +1050,40 @@ interface PxContactPairPoint {
 //    attribute float restitution;
 //    attribute float damping;
 //};
-//
-//[Prefix="physx::", NoDelete]
-//interface PxController {
-//    PxControllerShapeTypeEnum getType();
-//    void release();
-//    [Value] PxControllerCollisionFlags move([Const, Ref] PxVec3 disp, float minDist, float elapsedTime, [Const, Ref] PxControllerFilters filters, [Const] optional PxObstacleContext obstacles);
-//    boolean setPosition([Const, Ref] PxExtendedVec3 position);
-//    [Const, Ref] PxExtendedVec3 getPosition();
-//    boolean setFootPosition([Const, Ref] PxExtendedVec3 position);
-//    [Value] PxExtendedVec3 getFootPosition();
-//    PxRigidDynamic getActor();
-//    void setStepOffset(float offset);
-//    float getStepOffset();
-//    void setNonWalkableMode(PxControllerNonWalkableModeEnum flag);
-//    PxControllerNonWalkableModeEnum getNonWalkableMode();
-//    float getContactOffset();
-//    void setContactOffset(float offset);
-//    [Value] PxVec3 getUpDirection();
-//    void setUpDirection([Const, Ref] PxVec3 up);
-//    float getSlopeLimit();
-//    void setSlopeLimit(float slopeLimit);
-//    void invalidateCache();
-//    PxScene getScene();
-////    VoidPtr getUserData();
-////    void setUserData(VoidPtr userData);
-//    void getState([Ref] PxControllerState state);
-//    void getStats([Ref] PxControllerStats stats);
-//    void resize(float height);
-//};
-//
-//[Prefix="physx::", NoDelete]
-//interface PxControllerBehaviorCallback {
-//};
-//
-////[JSImplementation="SimpleControllerBehaviorCallback"]
-////interface PxControllerBehaviorCallbackImpl {
-////    void PxControllerBehaviorCallbackImpl();
-////    unsigned long getShapeBehaviorFlags([Const, Ref] PxShape shape, [Const, Ref] PxActor actor);
-////    unsigned long getControllerBehaviorFlags([Const, Ref] PxController controller);
-////    unsigned long getObstacleBehaviorFlags([Const, Ref] PxObstacle obstacle);
-////};
-//
+
+[Prefix="physx::", NoDelete]
+interface PxController {
+    PxControllerShapeTypeEnum getType();
+    void release();
+    [Value] PxControllerCollisionFlags move([Const, Ref] PxVec3 disp, float minDist, float elapsedTime, [Const, Ref] PxControllerFilters filters, [Const] optional PxObstacleContext obstacles);
+    boolean setPosition([Const, Ref] PxExtendedVec3 position);
+    [Const, Ref] PxExtendedVec3 getPosition();
+    boolean setFootPosition([Const, Ref] PxExtendedVec3 position);
+    [Value] PxExtendedVec3 getFootPosition();
+    PxRigidDynamic getActor();
+    void setStepOffset(float offset);
+    float getStepOffset();
+    void setNonWalkableMode(PxControllerNonWalkableModeEnum flag);
+    PxControllerNonWalkableModeEnum getNonWalkableMode();
+    float getContactOffset();
+    void setContactOffset(float offset);
+    [Value] PxVec3 getUpDirection();
+    void setUpDirection([Const, Ref] PxVec3 up);
+    float getSlopeLimit();
+    void setSlopeLimit(float slopeLimit);
+    void invalidateCache();
+    PxScene getScene();
+//    VoidPtr getUserData();
+//    void setUserData(VoidPtr userData);
+    void getState([Ref] PxControllerState state);
+    void getStats([Ref] PxControllerStats stats);
+    void resize(float height);
+};
+
+[Prefix="physx::", NoDelete]
+interface PxControllerBehaviorCallback {
+};
+
 //[Prefix="physx::"]
 //interface PxControllerBehaviorFlags {
 ////    void PxControllerBehaviorFlags(octet flags);
@@ -944,15 +1091,15 @@ interface PxContactPairPoint {
 //    void raise(PxControllerBehaviorFlagEnum flag);
 //    void clear(PxControllerBehaviorFlagEnum flag);
 //};
-//
-//[Prefix="physx::"]
-//interface PxControllerCollisionFlags {
-////    void PxControllerCollisionFlags(octet flags);
-//    boolean isSet(PxControllerCollisionFlagEnum flag);
-//    void raise(PxControllerCollisionFlagEnum flag);
-//    void clear(PxControllerCollisionFlagEnum flag);
-//};
-//
+
+[Prefix="physx::"]
+interface PxControllerCollisionFlags {
+//    void PxControllerCollisionFlags(octet flags);
+    boolean isSet(PxControllerCollisionFlagEnum flag);
+    void raise(PxControllerCollisionFlagEnum flag);
+    void clear(PxControllerCollisionFlagEnum flag);
+};
+
 //[Prefix="physx::", NoDelete]
 //interface PxControllerDesc {
 //    boolean isValid();
@@ -974,27 +1121,27 @@ interface PxContactPairPoint {
 //    attribute boolean registerDeletionListener;
 ////    attribute VoidPtr userData;
 //};
-//
-//[Prefix="physx::"]
-//interface PxControllerFilterCallback {
-//    boolean filter([Const, Ref] PxController a, [Const, Ref] PxController b);
-//};
-//
-//[JSImplementation="PxControllerFilterCallback"]
-//interface PxControllerFilterCallbackImpl {
-//    void PxControllerFilterCallbackImpl();
-//    boolean filter([Const, Ref] PxController a, [Const, Ref] PxController b);
-//};
-//
-//[Prefix="physx::"]
-//interface PxControllerFilters {
-//    void PxControllerFilters([Const] optional PxFilterData filterData);
-//    [Const] attribute PxFilterData mFilterData;
-//    attribute PxQueryFilterCallback mFilterCallback;
-//    [Value] attribute PxQueryFlags mFilterFlags;
-//    attribute PxControllerFilterCallback mCCTFilterCallback;
-//};
-//
+
+[Prefix="physx::"]
+interface PxControllerFilterCallback {
+    boolean filter([Const, Ref] PxController a, [Const, Ref] PxController b);
+};
+
+[JSImplementation="PxControllerFilterCallback"]
+interface PxControllerFilterCallbackImpl {
+    void PxControllerFilterCallbackImpl();
+    boolean filter([Const, Ref] PxController a, [Const, Ref] PxController b);
+};
+
+[Prefix="physx::"]
+interface PxControllerFilters {
+    void PxControllerFilters([Const] optional PxFilterData filterData);
+    [Const] attribute PxFilterData mFilterData;
+    attribute PxQueryFilterCallback mFilterCallback;
+    [Value] attribute PxQueryFlags mFilterFlags;
+    attribute PxControllerFilterCallback mCCTFilterCallback;
+};
+
 //[Prefix="physx::"]
 //interface PxControllerHit {
 //    attribute PxController controller;
@@ -1022,48 +1169,48 @@ interface PxContactPairPoint {
 //    void setPreventVerticalSlidingAgainstCeiling(boolean flag);
 //    void shiftOrigin([Const, Ref] PxVec3 shift);
 //};
-//
-//[Prefix="physx::"]
-//interface PxControllerObstacleHit {
-////    [Const] attribute VoidPtr userData;
-//};
-//PxControllerObstacleHit implements PxControllerHit;
-//
-//[Prefix="physx::"]
-//interface PxControllerShapeHit {
-//    attribute PxShape shape;
-//    attribute PxRigidActor actor;
-//    attribute unsigned long triangleIndex;
-//};
-//PxControllerShapeHit implements PxControllerHit;
-//
-//[Prefix="physx::"]
-//interface PxControllerState {
-//    void PxControllerState();
-//    [Value] attribute PxVec3 deltaXP;
-//    attribute PxShape touchedShape;
-//    attribute PxRigidActor touchedActor;
-//    attribute unsigned long touchedObstacleHandle;
-//    attribute unsigned long collisionFlags;
-//    attribute boolean standOnAnotherCCT;
-//    attribute boolean standOnObstacle;
-//    attribute boolean isMovingUp;
-//};
-//
-//[Prefix="physx::"]
-//interface PxControllerStats {
-//    attribute unsigned short nbIterations;
-//    attribute unsigned short nbFullUpdates;
-//    attribute unsigned short nbPartialUpdates;
-//    attribute unsigned short nbTessellation;
-//};
-//
-//[Prefix="physx::"]
-//interface PxControllersHit {
-//    attribute PxController other;
-//};
-//PxControllersHit implements PxControllerHit;
-//
+
+[Prefix="physx::"]
+interface PxControllerObstacleHit {
+//    [Const] attribute VoidPtr userData;
+};
+PxControllerObstacleHit implements PxControllerHit;
+
+[Prefix="physx::"]
+interface PxControllerShapeHit {
+    attribute PxShape shape;
+    attribute PxRigidActor actor;
+    attribute unsigned long triangleIndex;
+};
+PxControllerShapeHit implements PxControllerHit;
+
+[Prefix="physx::"]
+interface PxControllerState {
+    void PxControllerState();
+    [Value] attribute PxVec3 deltaXP;
+    attribute PxShape touchedShape;
+    attribute PxRigidActor touchedActor;
+    attribute unsigned long touchedObstacleHandle;
+    attribute unsigned long collisionFlags;
+    attribute boolean standOnAnotherCCT;
+    attribute boolean standOnObstacle;
+    attribute boolean isMovingUp;
+};
+
+[Prefix="physx::"]
+interface PxControllerStats {
+    attribute unsigned short nbIterations;
+    attribute unsigned short nbFullUpdates;
+    attribute unsigned short nbPartialUpdates;
+    attribute unsigned short nbTessellation;
+};
+
+[Prefix="physx::"]
+interface PxControllersHit {
+    attribute PxController other;
+};
+PxControllersHit implements PxControllerHit;
+
 //[Prefix="physx::"]
 //interface PxConvexFlags {
 //    void PxConvexFlags(unsigned short flags);
@@ -1269,20 +1416,15 @@ interface PxDebugTriangle {
 //    void PxErrorCallbackImpl();
 //    void reportError(PxErrorCodeEnum code, [Const] DOMString message, [Const] DOMString file, long line);
 //};
-//
-//[Prefix="physx::"]
-//interface PxExtendedVec3 {
-//    void PxExtendedVec3();
-//    void PxExtendedVec3(double x, double y, double z);
-//    attribute double x;
-//    attribute double y;
-//    attribute double z;
-//};
-//
-////[NoDelete]
-////interface PxExtensionTopLevelFunctions {
-////    static PxRigidStatic CreatePlane([Ref] PxPhysics sdk, [Const, Ref] PxPlane plane, [Ref] PxMaterial material, [Const, Ref] PxFilterData filterData);
-////};
+
+[Prefix="physx::"]
+interface PxExtendedVec3 {
+    void PxExtendedVec3();
+    void PxExtendedVec3(double x, double y, double z);
+    attribute double x;
+    attribute double y;
+    attribute double z;
+};
 
 [Prefix="physx::"]
 interface PxFilterData {
@@ -1347,44 +1489,12 @@ interface PxGeometry {
 //    static void computeGeomBounds([Ref] PxBounds3 bounds, [Const, Ref] PxGeometry geom, [Const, Ref] PxTransform pose, optional float inflation);
 //    static boolean isValid([Const, Ref] PxGeometry geom);
 //};
-//
-////interface PxGjkQuery {
-////    static boolean proximityInfo([Const, Ref] Support a, [Const, Ref] Support b, [Const, Ref] PxTransform poseA, [Const, Ref] PxTransform poseB, float contactDistance, float toleranceLength, [Ref] PxGjkQueryProximityInfoResult result);
-////    static boolean raycast([Const, Ref] Support shape, [Const, Ref] PxTransform pose, [Const, Ref] PxVec3 rayStart, [Const, Ref] PxVec3 unitDir, float maxDist, [Ref] PxGjkQueryRaycastResult result);
-////    static boolean overlap([Const, Ref] Support a, [Const, Ref] Support b, [Const, Ref] PxTransform poseA, [Const, Ref] PxTransform poseB);
-////    static boolean sweep([Const, Ref] Support a, [Const, Ref] Support b, [Const, Ref] PxTransform poseA, [Const, Ref] PxTransform poseB, [Const, Ref] PxVec3 unitDir, float maxDist, [Ref] PxGjkQuerySweepResult result);
-////};
-//
+
 ////[Prefix="physx::"]
 ////interface PxGjkQueryExt {
 ////    static boolean generateContacts([Const, Ref] Support a, [Const, Ref] Support b, [Const, Ref] PxTransform poseA, [Const, Ref] PxTransform poseB, float contactDistance, float toleranceLength, [Ref] PxContactBuffer contactBuffer);
 ////};
-////
-////interface PxGjkQueryProximityInfoResult {
-////    void PxGjkQueryProximityInfoResult();
-////    attribute boolean success;
-////    [Value] attribute PxVec3 pointA;
-////    [Value] attribute PxVec3 pointB;
-////    [Value] attribute PxVec3 separatingAxis;
-////    attribute float separation;
-////};
-//
-////interface PxGjkQueryRaycastResult {
-////    void PxGjkQueryRaycastResult();
-////    attribute boolean success;
-////    attribute float t;
-////    [Value] attribute PxVec3 n;
-////    [Value] attribute PxVec3 p;
-////};
-//
-////interface PxGjkQuerySweepResult {
-////    void PxGjkQuerySweepResult();
-////    attribute boolean success;
-////    attribute float t;
-////    [Value] attribute PxVec3 n;
-////    [Value] attribute PxVec3 p;
-////};
-//
+
 //[Prefix="physx::", NoDelete]
 //interface PxHeightField {
 ////    unsigned long saveCells(VoidPtr destBuffer, unsigned long destBufferSize);
@@ -1621,15 +1731,15 @@ interface PxMaterialFlags {
 //    void raise(PxMeshFlagEnum flag);
 //    void clear(PxMeshFlagEnum flag);
 //};
-//
-//[Prefix="physx::"]
-//interface PxMeshGeometryFlags {
-////    void PxMeshGeometryFlags(octet flags);
-//    boolean isSet(PxMeshGeometryFlagEnum flag);
-//    void raise(PxMeshGeometryFlagEnum flag);
-//    void clear(PxMeshGeometryFlagEnum flag);
-//};
-//
+
+[Prefix="physx::"]
+interface PxMeshGeometryFlags {
+//    void PxMeshGeometryFlags(octet flags);
+    boolean isSet(PxMeshGeometryFlagEnum flag);
+    void raise(PxMeshGeometryFlagEnum flag);
+    void clear(PxMeshGeometryFlagEnum flag);
+};
+
 //[Prefix="physx::"]
 //interface PxMeshOverlapUtil {
 //    void PxMeshOverlapUtil();
@@ -1645,14 +1755,14 @@ interface PxMaterialFlags {
 //    void raise(PxMeshPreprocessingFlagEnum flag);
 //    void clear(PxMeshPreprocessingFlagEnum flag);
 //};
-//
-//[Prefix="physx::"]
-//interface PxMeshScale {
-//    void PxMeshScale();
-//    void PxMeshScale(float r);
-//    void PxMeshScale([Const, Ref] PxVec3 s, [Const, Ref] PxQuat r);
-//};
-//
+
+[Prefix="physx::"]
+interface PxMeshScale {
+    void PxMeshScale();
+    void PxMeshScale(float r);
+    void PxMeshScale([Const, Ref] PxVec3 s, [Const, Ref] PxQuat r);
+};
+
 //[Prefix="physx::"]
 //interface PxMidphaseDesc {
 //    void PxMidphaseDesc();
@@ -1662,27 +1772,27 @@ interface PxMaterialFlags {
 //    [Value] attribute PxBVH33MidphaseDesc mBVH33Desc;
 //    [Value] attribute PxBVH34MidphaseDesc mBVH34Desc;
 //};
-//
-//[Prefix="physx::"]
-//interface PxObstacle {
-//    PxGeometryTypeEnum getType();
-////    attribute VoidPtr mUserData;
-//    [Value] attribute PxExtendedVec3 mPos;
-//    [Value] attribute PxQuat mRot;
-//};
-//
-//[Prefix="physx::"]
-//interface PxObstacleContext {
-//    void release();
-//    [Ref] PxControllerManager getControllerManager();
-//    unsigned long addObstacle([Const, Ref] PxObstacle obstacle);
-//    boolean removeObstacle(unsigned long handle);
-//    boolean updateObstacle(unsigned long handle, [Const, Ref] PxObstacle obstacle);
-//    unsigned long getNbObstacles();
-//    [Const] PxObstacle getObstacle(unsigned long i);
-//    [Const] PxObstacle getObstacleByHandle(unsigned long handle);
-//};
-//
+
+[Prefix="physx::"]
+interface PxObstacle {
+    PxGeometryTypeEnum getType();
+//    attribute VoidPtr mUserData;
+    [Value] attribute PxExtendedVec3 mPos;
+    [Value] attribute PxQuat mRot;
+};
+
+[Prefix="physx::"]
+interface PxObstacleContext {
+    void release();
+    [Ref] PxControllerManager getControllerManager();
+    unsigned long addObstacle([Const, Ref] PxObstacle obstacle);
+    boolean removeObstacle(unsigned long handle);
+    boolean updateObstacle(unsigned long handle, [Const, Ref] PxObstacle obstacle);
+    unsigned long getNbObstacles();
+    [Const] PxObstacle getObstacle(unsigned long i);
+    [Const] PxObstacle getObstacleByHandle(unsigned long handle);
+};
+
 //[Prefix="physx::"]
 //interface PxOmniPvd {
 //    boolean startSampling();
@@ -1850,13 +1960,6 @@ interface PxQuat {
 [Prefix="physx::"]
 interface PxQueryFilterCallback {
 };
-
-////[JSImplementation="SimpleQueryFilterCallback"]
-////interface PxQueryFilterCallbackImpl {
-////    void PxQueryFilterCallbackImpl();
-////    unsigned long simplePreFilter([Const, Ref] PxFilterData filterData, [Const] PxShape shape, [Const] PxRigidActor actor, [Ref] PxHitFlags queryFlags);
-////    unsigned long simplePostFilter([Const, Ref] PxFilterData filterData, [Const, Ref] PxQueryHit hit, [Const] PxShape shape, [Const] PxRigidActor actor);
-////};
 
 [Prefix="physx::"]
 interface PxQueryFilterData {
@@ -2491,29 +2594,6 @@ PxSweepHit implements PxGeomSweepHit;
 //    void PxTolerancesScale();
 //};
 
-[NoDelete]
-interface PxTopLevelFunctions {
-//    [Value] static PxSimulationFilterShader DefaultFilterShader();
-//    static void setupPassThroughFilterShader(PxSceneDesc sceneDesc, PassThroughFilterShader filterShader);
-//    static PxControllerManager CreateControllerManager([Ref] PxScene scene, optional boolean lockingEnabled);
-//    static PxFoundation CreateFoundation(unsigned long version, [Ref] PxDefaultAllocator allocator, [Ref] PxErrorCallback errorCallback);
-//    static PxPhysics CreatePhysics(unsigned long version, [Ref] PxFoundation foundation, [Const, Ref] PxTolerancesScale params, optional PxPvd pvd, optional PxOmniPvd omniPvd);
-//    static PxDefaultCpuDispatcher DefaultCpuDispatcherCreate(unsigned long numThreads);
-//    static boolean InitExtensions([Ref] PxPhysics physics);
-//    static void CloseExtensions();
-//    static PxPvd CreatePvd([Ref] PxFoundation foundation);
-//    static PxD6Joint D6JointCreate([Ref] PxPhysics physics, PxRigidActor actor0, [Ref] PxTransform localFrame0, PxRigidActor actor1, [Ref] PxTransform localFrame1);
-//    static PxDistanceJoint DistanceJointCreate([Ref] PxPhysics physics, PxRigidActor actor0, [Ref] PxTransform localFrame0, PxRigidActor actor1, [Ref] PxTransform localFrame1);
-//    static PxFixedJoint FixedJointCreate([Ref] PxPhysics physics, PxRigidActor actor0, [Ref] PxTransform localFrame0, PxRigidActor actor1, [Ref] PxTransform localFrame1);
-//    static PxPrismaticJoint PrismaticJointCreate([Ref] PxPhysics physics, PxRigidActor actor0, [Ref] PxTransform localFrame0, PxRigidActor actor1, [Ref] PxTransform localFrame1);
-//    static PxRevoluteJoint RevoluteJointCreate([Ref] PxPhysics physics, PxRigidActor actor0, [Ref] PxTransform localFrame0, PxRigidActor actor1, [Ref] PxTransform localFrame1);
-//    static PxSphericalJoint SphericalJointCreate([Ref] PxPhysics physics, PxRigidActor actor0, [Ref] PxTransform localFrame0, PxRigidActor actor1, [Ref] PxTransform localFrame1);
-//    static PxConvexMesh CreateConvexMesh([Const, Ref] PxCookingParams params, [Const, Ref] PxConvexMeshDesc desc);
-//    static PxTriangleMesh CreateTriangleMesh([Const, Ref] PxCookingParams params, [Const, Ref] PxTriangleMeshDesc desc);
-//    static PxHeightField CreateHeightField([Const, Ref] PxHeightFieldDesc desc);
-    static readonly attribute unsigned long PHYSICS_VERSION;
-};
-
 [Prefix="physx::"]
 interface PxTransform {
     void PxTransform();
@@ -2523,114 +2603,114 @@ interface PxTransform {
     [Value] attribute PxVec3 p;
 };
 
+[Prefix="physx::"]
+interface PxTriangle {
+    void PxTriangle();
+    void PxTriangle([Const, Ref] PxVec3 p0, [Const, Ref] PxVec3 p1, [Const, Ref] PxVec3 p2);
+    void normal([Ref] PxVec3 normal);
+    void denormalizedNormal([Ref] PxVec3 normal);
+    float area();
+    [Value] PxVec3 pointFromUV(float u, float v);
+};
+
+[Prefix="physx::", NoDelete]
+interface PxTriangleMesh {
+    unsigned long getNbVertices();
+    [Const] PxVec3 getVertices();
+    PxVec3 getVerticesForModification();
+    [Value] PxBounds3 refitBVH();
+    unsigned long getNbTriangles();
+//    [Const] VoidPtr getTriangles();
+    [Value] PxTriangleMeshFlags getTriangleMeshFlags();
+    [Const, Value] PxU32ConstPtr getTrianglesRemap();
+    unsigned short getTriangleMaterialIndex(unsigned long triangleIndex);
+    [Value] PxBounds3 getLocalBounds();
+};
+PxTriangleMesh implements PxRefCounted;
+
 //[Prefix="physx::"]
-//interface PxTriangle {
-//    void PxTriangle();
-//    void PxTriangle([Const, Ref] PxVec3 p0, [Const, Ref] PxVec3 p1, [Const, Ref] PxVec3 p2);
-//    void normal([Ref] PxVec3 normal);
-//    void denormalizedNormal([Ref] PxVec3 normal);
-//    float area();
-//    [Value] PxVec3 pointFromUV(float u, float v);
+//interface PxTriangleMeshDesc {
+//    void PxTriangleMeshDesc();
+//    [Value] attribute PxU16StridedData materialIndices;
 //};
-//
-//[Prefix="physx::", NoDelete]
-//interface PxTriangleMesh {
-//    unsigned long getNbVertices();
-//    [Const] PxVec3 getVertices();
-//    PxVec3 getVerticesForModification();
-//    [Value] PxBounds3 refitBVH();
-//    unsigned long getNbTriangles();
-////    [Const] VoidPtr getTriangles();
-//    [Value] PxTriangleMeshFlags getTriangleMeshFlags();
-//    [Const, Value] PxU32ConstPtr getTrianglesRemap();
-//    unsigned short getTriangleMaterialIndex(unsigned long triangleIndex);
-//    [Value] PxBounds3 getLocalBounds();
+//PxTriangleMeshDesc implements PxSimpleTriangleMesh;
+
+[Prefix="physx::"]
+interface PxTriangleMeshFlags {
+//    void PxTriangleMeshFlags(octet flags);
+    boolean isSet(PxTriangleMeshFlagEnum flag);
+    void raise(PxTriangleMeshFlagEnum flag);
+    void clear(PxTriangleMeshFlagEnum flag);
+};
+
+[Prefix="physx::"]
+interface PxTriangleMeshGeometry {
+    void PxTriangleMeshGeometry(PxTriangleMesh mesh, [Const, Ref] optional PxMeshScale scaling, [Ref] optional PxMeshGeometryFlags flags);
+    boolean isValid();
+    [Value] attribute PxMeshScale scale;
+    [Value] attribute PxMeshGeometryFlags meshFlags;
+    attribute PxTriangleMesh triangleMesh;
+};
+PxTriangleMeshGeometry implements PxGeometry;
+
+[Prefix="physx::"]
+interface PxTriggerPair {
+    attribute PxShape triggerShape;
+    attribute PxActor triggerActor;
+    attribute PxShape otherShape;
+    attribute PxActor otherActor;
+    attribute PxPairFlagEnum status;
+    [Value] attribute PxTriggerPairFlags flags;
+};
+
+[Prefix="physx::"]
+interface PxTriggerPairFlags {
+//    void PxTriggerPairFlags(octet flags);
+    boolean isSet(PxTriggerPairFlagEnum flag);
+    void raise(PxTriggerPairFlagEnum flag);
+    void clear(PxTriggerPairFlagEnum flag);
+};
+
+//interface PxU16ConstPtr {
 //};
-//PxTriangleMesh implements PxRefCounted;
-//
-////[Prefix="physx::"]
-////interface PxTriangleMeshDesc {
-////    void PxTriangleMeshDesc();
-////    [Value] attribute PxU16StridedData materialIndices;
-////};
-////PxTriangleMeshDesc implements PxSimpleTriangleMesh;
-//
-//[Prefix="physx::"]
-//interface PxTriangleMeshFlags {
-////    void PxTriangleMeshFlags(octet flags);
-//    boolean isSet(PxTriangleMeshFlagEnum flag);
-//    void raise(PxTriangleMeshFlagEnum flag);
-//    void clear(PxTriangleMeshFlagEnum flag);
+
+//interface PxU16Ptr {
 //};
-//
-//[Prefix="physx::"]
-//interface PxTriangleMeshGeometry {
-//    void PxTriangleMeshGeometry(PxTriangleMesh mesh, [Const, Ref] optional PxMeshScale scaling, [Ref] optional PxMeshGeometryFlags flags);
-//    boolean isValid();
-//    [Value] attribute PxMeshScale scale;
-//    [Value] attribute PxMeshGeometryFlags meshFlags;
-//    attribute PxTriangleMesh triangleMesh;
+//PxU16Ptr implements PxU16ConstPtr;
+
+//interface PxU16StridedData {
+//    attribute unsigned long stride;
+//    [Const, Value] attribute PxU16ConstPtr data;
 //};
-//PxTriangleMeshGeometry implements PxGeometry;
-//
-//[Prefix="physx::"]
-//interface PxTriggerPair {
-//    attribute PxShape triggerShape;
-//    attribute PxActor triggerActor;
-//    attribute PxShape otherShape;
-//    attribute PxActor otherActor;
-//    attribute PxPairFlagEnum status;
-//    [Value] attribute PxTriggerPairFlags flags;
-//};
-//
-//[Prefix="physx::"]
-//interface PxTriggerPairFlags {
-////    void PxTriggerPairFlags(octet flags);
-//    boolean isSet(PxTriggerPairFlagEnum flag);
-//    void raise(PxTriggerPairFlagEnum flag);
-//    void clear(PxTriggerPairFlagEnum flag);
-//};
-//
-////interface PxU16ConstPtr {
-////};
-//
-////interface PxU16Ptr {
-////};
-////PxU16Ptr implements PxU16ConstPtr;
-//
-////interface PxU16StridedData {
-////    attribute unsigned long stride;
-////    [Const, Value] attribute PxU16ConstPtr data;
-////};
-//
-//interface PxU32ConstPtr {
-//};
-//
-//interface PxU32Ptr {
-//};
-//PxU32Ptr implements PxU32ConstPtr;
+
+interface PxU32ConstPtr {
+};
+
+interface PxU32Ptr {
+};
+PxU32Ptr implements PxU32ConstPtr;
 
 interface PxU8ConstPtr {
 };
 
-//interface PxU8Ptr {
-//};
-//PxU8Ptr implements PxU8ConstPtr;
-//
-//[Prefix="physx::", NoDelete]
-//interface PxUserControllerHitReport {
-//    void onShapeHit([Const, Ref] PxControllerShapeHit hit);
-//    void onControllerHit([Const, Ref] PxControllersHit hit);
-//    void onObstacleHit([Const, Ref] PxControllerObstacleHit hit);
-//};
-//
-//[JSImplementation="PxUserControllerHitReport"]
-//interface PxUserControllerHitReportImpl {
-//    void PxUserControllerHitReportImpl();
-//    void onShapeHit([Const, Ref] PxControllerShapeHit hit);
-//    void onControllerHit([Const, Ref] PxControllersHit hit);
-//    void onObstacleHit([Const, Ref] PxControllerObstacleHit hit);
-//};
+interface PxU8Ptr {
+};
+PxU8Ptr implements PxU8ConstPtr;
+
+[Prefix="physx::", NoDelete]
+interface PxUserControllerHitReport {
+    void onShapeHit([Const, Ref] PxControllerShapeHit hit);
+    void onControllerHit([Const, Ref] PxControllersHit hit);
+    void onObstacleHit([Const, Ref] PxControllerObstacleHit hit);
+};
+
+[JSImplementation="PxUserControllerHitReport"]
+interface PxUserControllerHitReportImpl {
+    void PxUserControllerHitReportImpl();
+    void onShapeHit([Const, Ref] PxControllerShapeHit hit);
+    void onControllerHit([Const, Ref] PxControllersHit hit);
+    void onObstacleHit([Const, Ref] PxControllerObstacleHit hit);
+};
 
 [Prefix="physx::"]
 interface PxVec3 {
@@ -2680,51 +2760,51 @@ interface PxVec4 {
     attribute float w;
 };
 
-//[Prefix="physx::vehicle2::"]
-//interface PxVehicleAckermannParams {
-//    void PxVehicleAckermannParams();
-//    boolean isValid([Const, Ref] PxVehicleAxleDescription axleDesc);
-//    [Value] PxVehicleAckermannParams transformAndScale([Const, Ref] PxVehicleFrame srcFrame, [Const, Ref] PxVehicleFrame trgFrame, [Const, Ref] PxVehicleScale srcScale, [Const, Ref] PxVehicleScale trgScale);
-////    attribute unsigned long[] wheelIds;
-//    attribute float wheelBase;
-//    attribute float trackWidth;
-//    attribute float strength;
-//};
-//
-//[Prefix="physx::vehicle2::"]
-//interface PxVehicleAntiRollForceParams {
-//    void PxVehicleAntiRollForceParams();
-//    [Value] PxVehicleAntiRollForceParams transformAndScale([Const, Ref] PxVehicleFrame srcFrame, [Const, Ref] PxVehicleFrame trgFrame, [Const, Ref] PxVehicleScale srcScale, [Const, Ref] PxVehicleScale trgScale);
-//    boolean isValid([Const, Ref] PxVehicleAxleDescription axleDesc);
-//    attribute unsigned long wheel0;
-//    attribute unsigned long wheel1;
-//    attribute float stiffness;
-//};
-//
-//[Prefix="physx::vehicle2::"]
-//interface PxVehicleAntiRollTorque {
-//    void PxVehicleAntiRollTorque();
-//    void setToDefault();
-//    [Value] attribute PxVec3 antiRollTorque;
-//};
-//
-//[Prefix="physx::vehicle2::"]
-//interface PxVehicleAutoboxParams {
-//    void PxVehicleAutoboxParams();
-//    [Value] PxVehicleAutoboxParams transformAndScale([Const, Ref] PxVehicleFrame srcFrame, [Const, Ref] PxVehicleFrame trgFrame, [Const, Ref] PxVehicleScale srcScale, [Const, Ref] PxVehicleScale trgScale);
-//    boolean isValid([Const, Ref] PxVehicleGearboxParams gearboxParams);
-////    attribute float[] upRatios;
-////    attribute float[] downRatios;
-//    attribute float latency;
-//};
-//
-//[Prefix="physx::vehicle2::"]
-//interface PxVehicleAutoboxState {
-//    void PxVehicleAutoboxState();
-//    void setToDefault();
-//    attribute float timeSinceLastShift;
-//    attribute boolean activeAutoboxGearShift;
-//};
+[Prefix="physx::vehicle2::"]
+interface PxVehicleAckermannParams {
+    void PxVehicleAckermannParams();
+    boolean isValid([Const, Ref] PxVehicleAxleDescription axleDesc);
+    [Value] PxVehicleAckermannParams transformAndScale([Const, Ref] PxVehicleFrame srcFrame, [Const, Ref] PxVehicleFrame trgFrame, [Const, Ref] PxVehicleScale srcScale, [Const, Ref] PxVehicleScale trgScale);
+//    attribute unsigned long[] wheelIds;
+    attribute float wheelBase;
+    attribute float trackWidth;
+    attribute float strength;
+};
+
+[Prefix="physx::vehicle2::"]
+interface PxVehicleAntiRollForceParams {
+    void PxVehicleAntiRollForceParams();
+    [Value] PxVehicleAntiRollForceParams transformAndScale([Const, Ref] PxVehicleFrame srcFrame, [Const, Ref] PxVehicleFrame trgFrame, [Const, Ref] PxVehicleScale srcScale, [Const, Ref] PxVehicleScale trgScale);
+    boolean isValid([Const, Ref] PxVehicleAxleDescription axleDesc);
+    attribute unsigned long wheel0;
+    attribute unsigned long wheel1;
+    attribute float stiffness;
+};
+
+[Prefix="physx::vehicle2::"]
+interface PxVehicleAntiRollTorque {
+    void PxVehicleAntiRollTorque();
+    void setToDefault();
+    [Value] attribute PxVec3 antiRollTorque;
+};
+
+[Prefix="physx::vehicle2::"]
+interface PxVehicleAutoboxParams {
+    void PxVehicleAutoboxParams();
+    [Value] PxVehicleAutoboxParams transformAndScale([Const, Ref] PxVehicleFrame srcFrame, [Const, Ref] PxVehicleFrame trgFrame, [Const, Ref] PxVehicleScale srcScale, [Const, Ref] PxVehicleScale trgScale);
+    boolean isValid([Const, Ref] PxVehicleGearboxParams gearboxParams);
+//    attribute float[] upRatios;
+//    attribute float[] downRatios;
+    attribute float latency;
+};
+
+[Prefix="physx::vehicle2::"]
+interface PxVehicleAutoboxState {
+    void PxVehicleAutoboxState();
+    void setToDefault();
+    attribute float timeSinceLastShift;
+    attribute boolean activeAutoboxGearShift;
+};
 
 [Prefix="physx::vehicle2::"]
 interface PxVehicleAxleDescription {
@@ -2741,38 +2821,38 @@ interface PxVehicleAxleDescription {
     attribute unsigned long nbWheels;
 };
 
-//[Prefix="physx::vehicle2::"]
-//interface PxVehicleBrakeCommandResponseParams {
-//    void PxVehicleBrakeCommandResponseParams();
-//    [Value] PxVehicleBrakeCommandResponseParams transformAndScale([Const, Ref] PxVehicleFrame srcFrame, [Const, Ref] PxVehicleFrame trgFrame, [Const, Ref] PxVehicleScale srcScale, [Const, Ref] PxVehicleScale trgScale);
-//    boolean isValid([Const, Ref] PxVehicleAxleDescription axleDesc);
-//};
-//PxVehicleBrakeCommandResponseParams implements PxVehicleCommandResponseParams;
-//
-//[Prefix="physx::vehicle2::"]
-//interface PxVehicleClutchCommandResponseParams {
-//    void PxVehicleClutchCommandResponseParams();
-//    [Value] PxVehicleClutchCommandResponseParams transformAndScale([Const, Ref] PxVehicleFrame srcFrame, [Const, Ref] PxVehicleFrame trgFrame, [Const, Ref] PxVehicleScale srcScale, [Const, Ref] PxVehicleScale trgScale);
-//    boolean isValid();
-//    attribute float maxResponse;
-//};
-//
-//[Prefix="physx::vehicle2::"]
-//interface PxVehicleClutchCommandResponseState {
-//    void PxVehicleClutchCommandResponseState();
-//    void setToDefault();
-//    attribute float normalisedCommandResponse;
-//    attribute float commandResponse;
-//};
-//
-//[Prefix="physx::vehicle2::"]
-//interface PxVehicleClutchParams {
-//    void PxVehicleClutchParams();
-//    [Value] PxVehicleClutchParams transformAndScale([Const, Ref] PxVehicleFrame srcFrame, [Const, Ref] PxVehicleFrame trgFrame, [Const, Ref] PxVehicleScale srcScale, [Const, Ref] PxVehicleScale trgScale);
-//    boolean isValid();
-//    attribute PxVehicleClutchAccuracyModeEnum accuracyMode;
-//    attribute unsigned long estimateIterations;
-//};
+[Prefix="physx::vehicle2::"]
+interface PxVehicleBrakeCommandResponseParams {
+    void PxVehicleBrakeCommandResponseParams();
+    [Value] PxVehicleBrakeCommandResponseParams transformAndScale([Const, Ref] PxVehicleFrame srcFrame, [Const, Ref] PxVehicleFrame trgFrame, [Const, Ref] PxVehicleScale srcScale, [Const, Ref] PxVehicleScale trgScale);
+    boolean isValid([Const, Ref] PxVehicleAxleDescription axleDesc);
+};
+PxVehicleBrakeCommandResponseParams implements PxVehicleCommandResponseParams;
+
+[Prefix="physx::vehicle2::"]
+interface PxVehicleClutchCommandResponseParams {
+    void PxVehicleClutchCommandResponseParams();
+    [Value] PxVehicleClutchCommandResponseParams transformAndScale([Const, Ref] PxVehicleFrame srcFrame, [Const, Ref] PxVehicleFrame trgFrame, [Const, Ref] PxVehicleScale srcScale, [Const, Ref] PxVehicleScale trgScale);
+    boolean isValid();
+    attribute float maxResponse;
+};
+
+[Prefix="physx::vehicle2::"]
+interface PxVehicleClutchCommandResponseState {
+    void PxVehicleClutchCommandResponseState();
+    void setToDefault();
+    attribute float normalisedCommandResponse;
+    attribute float commandResponse;
+};
+
+[Prefix="physx::vehicle2::"]
+interface PxVehicleClutchParams {
+    void PxVehicleClutchParams();
+    [Value] PxVehicleClutchParams transformAndScale([Const, Ref] PxVehicleFrame srcFrame, [Const, Ref] PxVehicleFrame trgFrame, [Const, Ref] PxVehicleScale srcScale, [Const, Ref] PxVehicleScale trgScale);
+    boolean isValid();
+    attribute PxVehicleClutchAccuracyModeEnum accuracyMode;
+    attribute unsigned long estimateIterations;
+};
 
 [Prefix="physx::vehicle2::"]
 interface PxVehicleClutchSlipState {
@@ -3270,12 +3350,6 @@ interface PxVehicleTireForceParams {
     attribute float camberStiff;
     attribute float restLoad;
 };
-//
-//[NoDelete]
-//interface PxVehicleTireForceParamsExt {
-//    static void setFrictionVsSlip(PxVehicleTireForceParams tireForceParams, unsigned long i, unsigned long j, float value);
-//    static void setLoadFilter(PxVehicleTireForceParams tireForceParams, unsigned long i, unsigned long j, float value);
-//};
 
 [Prefix="physx::vehicle2::"]
 interface PxVehicleTireGripState {
@@ -3325,16 +3399,6 @@ interface PxVehicleTireStickyState {
 //    attribute float[] lowSpeedTime;
 //    attribute boolean[] activeStatus;
 };
-
-//[NoDelete]
-//interface PxVehicleTopLevelFunctions {
-//    static boolean InitVehicleExtension([Ref] PxFoundation foundation);
-//    static void CloseVehicleExtension();
-//    static boolean VehicleComputeSprungMasses(unsigned long nbSprungMasses, [Const, Ref] Vector_PxVec3 sprungMassCoordinates, float totalMass, PxVehicleAxesEnum gravityDirection, [Ref] Vector_PxReal sprungMasses);
-//    static PxConvexMesh VehicleUnitCylinderSweepMeshCreate([Const, Ref] PxVehicleFrame vehicleFrame, [Ref] PxPhysics physics, [Const, Ref] PxCookingParams params);
-//    static void VehicleUnitCylinderSweepMeshDestroy(PxConvexMesh mesh);
-//    static readonly attribute unsigned long MAX_NB_ENGINE_TORQUE_CURVE_ENTRIES;
-//};
 
 interface PxVehicleTorqueCurveLookupTable {
     void PxVehicleTorqueCurveLookupTable();
@@ -3399,62 +3463,18 @@ interface PxVehicleWheelRigidBody1dState {
 interface PxVehicleWheelsPtr {
 };
 
-[JSImplementation="SimplePvdTransport"]
-interface SimplPvdTransportImpl {
-    void SimplPvdTransportImpl();
-    boolean connect();
-    boolean isConnected();
-    void disconnect();
-    void send(any inBytes, unsigned long inLength);
-    void flush();
+[Prefix="physx::PxGjkQueryExt::"]
+interface SphereSupport {
+    void SphereSupport(float radius);
+    attribute float radius;
 };
-//
-//interface SimpleControllerBehaviorCallback {
-//    unsigned long getShapeBehaviorFlags([Const, Ref] PxShape shape, [Const, Ref] PxActor actor);
-//    unsigned long getControllerBehaviorFlags([Const, Ref] PxController controller);
-//    unsigned long getObstacleBehaviorFlags([Const, Ref] PxObstacle obstacle);
-//};
-//SimpleControllerBehaviorCallback implements PxControllerBehaviorCallback;
+SphereSupport implements Support;
 
-//interface SimplePvdTransport {
-//    void send(any inBytes, unsigned long inLength);
-//};
-//SimplePvdTransport implements PxPvdTransport;
-
-//interface SimpleQueryFilterCallback {
-//    unsigned long simplePreFilter([Const, Ref] PxFilterData filterData, [Const] PxShape shape, [Const] PxRigidActor actor, [Ref] PxHitFlags queryFlags);
-//    unsigned long simplePostFilter([Const, Ref] PxFilterData filterData, [Const, Ref] PxQueryHit hit, [Const] PxShape shape, [Const] PxRigidActor actor);
-//};
-//SimpleQueryFilterCallback implements PxQueryFilterCallback;
-
-//interface SimpleSimulationEventCallback {
-//    void onConstraintBreak(PxConstraintInfo constraints, unsigned long count);
-//    void onWake(PxActorPtr actors, unsigned long count);
-//    void onSleep(PxActorPtr actors, unsigned long count);
-//    void onContact([Const, Ref] PxContactPairHeader pairHeader, [Const] PxContactPair pairs, unsigned long nbPairs);
-//    void onTrigger(PxTriggerPair pairs, unsigned long count);
-//};
-//SimpleSimulationEventCallback implements PxSimulationEventCallback;
-
-//[Prefix="physx::PxGjkQueryExt::"]
-//interface SphereSupport {
-//    void SphereSupport(float radius);
-//    attribute float radius;
-//};
-//SphereSupport implements Support;
-
-//[Prefix="physx::PxGjkQuery::"]
-//interface Support {
-//    float getMargin();
-//    [Value] PxVec3 supportLocal([Const, Ref] PxVec3 dir);
-//};
-
-//interface SupportFunctions {
-//    static PxShape PxActor_getShape([Ref] PxRigidActor actor, long index);
-//    [Ref] static Vector_PxActorPtr PxScene_getActiveActors(PxScene scene);
-//    static unsigned long PxArticulationReducedCoordinate_getMinSolverPositionIterations(PxArticulationReducedCoordinate articulation);
-//    static unsigned long PxArticulationReducedCoordinate_getMinSolverVelocityIterations(PxArticulationReducedCoordinate articulation);
-//};
+[Prefix="physx::PxGjkQuery::"]
+interface Support {
+    float getMargin();
+    [Value] PxVec3 supportLocal([Const, Ref] PxVec3 dir);
+};
 
 interface Vector_PxActorPtr {
     void Vector_PxActorPtr();
@@ -3577,8 +3597,6 @@ interface Vector_PxVec4 {
 };
 
 // [-NAMESPACE]
-
-
 
 //enum EngineDriveVehicleEnum {
 //    "EngineDriveVehicleEnum::eDIFFTYPE_FOURWHEELDRIVE",
