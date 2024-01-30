@@ -117,6 +117,16 @@ public class Main {
             taskTarget.cppInclude.add("**/src/physx/source/task/src/*.cpp");
             multiTarget.add(taskTarget);
 
+            // TARGET FAST XML
+
+            WindowsMSVSTarget fastXMLTarget = new WindowsMSVSTarget();
+            fastXMLTarget.isStatic = true;
+            fastXMLTarget.libName = "fastxml";
+            fastXMLTarget.libSuffix = "64.lib";
+            addIncludes(fastXMLTarget);
+            fastXMLTarget.cppInclude.add("**/src/physx/source/fastxml/src/*.cpp");
+            multiTarget.add(fastXMLTarget);
+
             // TARGET EXTENSIONS
 
             WindowsMSVSTarget extensionsTarget = new WindowsMSVSTarget();
@@ -125,6 +135,8 @@ public class Main {
             extensionsTarget.libSuffix = "64.lib";
             addIncludes(extensionsTarget);
             extensionsTarget.cppInclude.add("**/src/physx/source/physxextensions/**.cpp");
+            extensionsTarget.cppInclude.add("**/src/physx/source/physxmetadata/extensions/src/*.cpp");
+            extensionsTarget.cppInclude.add("**/src/physx/source/physxmetadata/core/src/*.cpp");
             multiTarget.add(extensionsTarget);
 
             // TARGET VEHICLE
@@ -233,6 +245,7 @@ public class Main {
         glueTarget.cppInclude.add(cppBuildPath + "/src/jniglue/JNIGlue.cpp");
         glueTarget.linkerFlags.add(cppBuildPath + "/libs/windows/core64.lib");
         glueTarget.linkerFlags.add(cppBuildPath + "/libs/windows/common64.lib");
+        glueTarget.linkerFlags.add(cppBuildPath + "/libs/windows/fastxml64.lib");
         glueTarget.linkerFlags.add(cppBuildPath + "/libs/windows/task64.lib");
         glueTarget.linkerFlags.add(cppBuildPath + "/libs/windows/extensions64.lib");
         glueTarget.linkerFlags.add(cppBuildPath + "/libs/windows/foundation64.lib");
