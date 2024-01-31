@@ -22,7 +22,8 @@ public class PhysxInitScreen extends ScreenAdapter {
     public void render(float delta) {
         if(physxInit) {
             physxInit = false;
-            game.setScreen(new PhysxTestScreen());
+//            game.setScreen(new PhysxTestScreen());
+            game.setScreen(new LibGDXPhysxInstancedScreen());
         }
     }
 }

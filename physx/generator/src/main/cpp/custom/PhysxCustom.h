@@ -152,12 +152,36 @@ typedef std::vector<physx::PxVec4> Vector_PxVec4;
 //typedef PxHitResult<physx::PxRaycastHit> PxRaycastResult;
 //typedef PxHitResult<physx::PxSweepHit> PxSweepResult;
 
+
+
 struct PxTopLevelFunctions {
+
+    static physx::PxFilterFlags defaultFilterShader(physx::PxFilterObjectAttributes attributes0, physx::PxFilterData filterData0,
+                                                 physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1,
+                                                 physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize) {
+        PX_UNUSED(constantBlock);
+        PX_UNUSED(constantBlockSize);
+
+        if ((0 == (filterData0.word0 & filterData1.word1)) && (0 == (filterData1.word0 & filterData0.word1))) {
+            return physx::PxFilterFlag::eSUPPRESS;
+        }
+
+        if (physx::PxFilterObjectIsTrigger(attributes0) || physx::PxFilterObjectIsTrigger(attributes1)) {
+            pairFlags = physx::PxPairFlag::eTRIGGER_DEFAULT;
+        } else {
+            pairFlags = physx::PxPairFlag::eCONTACT_DEFAULT;
+        }
+        pairFlags |= physx::PxPairFlags(physx::PxU16(filterData0.word2 | filterData1.word2));
+
+        return physx::PxFilterFlag::eDEFAULT;
+    }
+
     static const physx::PxU32 PHYSICS_VERSION = PX_PHYSICS_VERSION;
 
-//    static physx::PxSimulationFilterShader DefaultFilterShader() {
-//        return &defaultFilterShader;
-//    }
+    static physx::PxSimulationFilterShader DefaultFilterShader() {
+
+        return &defaultFilterShader;
+    }
 //
 //    static void setupPassThroughFilterShader(physx::PxSceneDesc* sceneDesc, PassThroughFilterShader* filterShader) {
 //        PassThroughFilterShader** data = new PassThroughFilterShader*[1];
@@ -167,13 +191,13 @@ struct PxTopLevelFunctions {
 //        sceneDesc->filterShaderDataSize = sizeof(PassThroughFilterShader*);
 //    }
 //
-//    static physx::PxFoundation* CreateFoundation(physx::PxU32 version, physx::PxDefaultAllocator& allocator, physx::PxErrorCallback& errorCallback) {
-//        return PxCreateFoundation(version, allocator, errorCallback);
-//    }
-//
-//    static physx::PxPhysics *CreatePhysics(physx::PxU32 version, physx::PxFoundation &foundation, const physx::PxTolerancesScale &scale, physx::PxPvd* pvd = NULL, physx::PxOmniPvd* omniPvd = NULL) {
-//        return PxCreatePhysics(version, foundation, scale, false, pvd, omniPvd);
-//    }
+    static physx::PxFoundation* CreateFoundation(physx::PxU32 version, physx::PxDefaultAllocator& allocator, physx::PxErrorCallback& errorCallback) {
+        return PxCreateFoundation(version, allocator, errorCallback);
+    }
+
+    static physx::PxPhysics *CreatePhysics(physx::PxU32 version, physx::PxFoundation &foundation, const physx::PxTolerancesScale &scale, physx::PxPvd* pvd = NULL, physx::PxOmniPvd* omniPvd = NULL) {
+        return PxCreatePhysics(version, foundation, scale, false, pvd, omniPvd);
+    }
 //
 //    static physx::PxControllerManager* CreateControllerManager(physx::PxScene& scene, bool lockingEnabled = false) {
 //        return PxCreateControllerManager(scene, lockingEnabled);
@@ -192,11 +216,11 @@ struct PxTopLevelFunctions {
 //        return PxCreateOmniPvd(foundation);
 //    }
 //#endif
-//
-//    static physx::PxDefaultCpuDispatcher* DefaultCpuDispatcherCreate(physx::PxU32 numThreads) {
-//        return physx::PxDefaultCpuDispatcherCreate(numThreads);
-//    }
-//
+
+    static physx::PxDefaultCpuDispatcher* DefaultCpuDispatcherCreate(physx::PxU32 numThreads) {
+        return physx::PxDefaultCpuDispatcherCreate(numThreads);
+    }
+
 //    static bool InitExtensions(physx::PxPhysics& physics) {
 //        return PxInitExtensions(physics, NULL);
 //    }

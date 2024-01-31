@@ -6,7 +6,7 @@ val assetsDir = File("$projectDir/assets");
 dependencies {
     implementation(project(":examples:basic:core"))
     implementation("com.badlogicgames.gdx:gdx-platform:${LibExt.gdxVersion}:natives-desktop")
-    implementation("com.badlogicgames.gdx:gdx-backend-lwjgl:${LibExt.gdxVersion}")
+    implementation("com.badlogicgames.gdx:gdx-backend-lwjgl3:${LibExt.gdxVersion}")
 
     // gdx-teavm Version
     implementation(project(":physx:desktop"))

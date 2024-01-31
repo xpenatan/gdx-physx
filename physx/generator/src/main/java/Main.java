@@ -66,7 +66,7 @@ public class Main {
     private static BuildMultiTarget getWindowBuildTarget(String cppBuildPath) {
         BuildMultiTarget multiTarget = new BuildMultiTarget();
 
-        boolean buildLibrary = true;
+        boolean buildLibrary = false;
 
         if(buildLibrary) {
             // TARGET FOUNDATION
