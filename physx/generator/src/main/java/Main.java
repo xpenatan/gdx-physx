@@ -367,7 +367,7 @@ public class Main {
     private static BuildMultiTarget getEmscriptenBuildTarget(String cppBuildPath, IDLReader idlReader) {
         BuildMultiTarget multiTarget = new BuildMultiTarget();
 
-        boolean buildLibrary = false;
+        boolean buildLibrary = true;
 
         if(buildLibrary) {
             // TARGET FOUNDATION
