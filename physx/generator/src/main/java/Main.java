@@ -4,6 +4,7 @@ import com.github.xpenatan.jparser.builder.BuildTarget;
 import com.github.xpenatan.jparser.builder.DefaultBuildTarget;
 import com.github.xpenatan.jparser.builder.JBuilder;
 import com.github.xpenatan.jparser.builder.targets.AndroidTarget;
+import com.github.xpenatan.jparser.builder.targets.EmscriptenTarget;
 import com.github.xpenatan.jparser.builder.targets.WindowsMSVSTarget;
 import com.github.xpenatan.jparser.core.JParser;
 import com.github.xpenatan.jparser.core.util.FileHelper;
@@ -57,8 +58,8 @@ public class Main {
 
         JBuilder.build(
                 buildConfig,
-                getWindowBuildTarget(cppBuildPath)
-//                getEmscriptenBuildTarget(idlPath)
+//                getWindowBuildTarget(cppBuildPath),
+                getEmscriptenBuildTarget(cppBuildPath, idlReader)
 //                getAndroidBuildTarget()
         );
     }
@@ -337,64 +338,220 @@ public class Main {
     private static void addIncludes(DefaultBuildTarget target) {
         addIncludeDirs(target);
         addFlags(target);
-        target.cppFlags.add("-W4");
-        target.cppFlags.add("/wd 4514");
-        target.cppFlags.add("/wd 4820");
-        target.cppFlags.add("/wd 4127");
-        target.cppFlags.add("/wd 4710");
-        target.cppFlags.add("/wd 4711");
-        target.cppFlags.add("/wd 4577");
-        target.cppFlags.add("/wd 4996");
-        target.cppFlags.add("/wd 4100"); //unreferenced formal parameter
-        target.cppFlags.add("/wd 4530");
-        target.cppFlags.add("-Zi");
-        target.cppFlags.add("-Gm-");
-        target.cppFlags.add("-Od");
-        target.cppFlags.add("-Zc:inline");
-        target.cppFlags.add("-fp:fast");
-        target.cppFlags.add("-GF");
-        target.cppFlags.add("-Zc:forScope");
-        target.cppFlags.add("-Zc:wchar_t");
-        target.cppFlags.add("-RTCu");
-        target.cppFlags.add("-GR-");
-        target.cppFlags.add("-Gd");
-        target.cppFlags.add("-Oy");
-        target.cppFlags.add("-MTd");
-        target.cppFlags.add("-diagnostics:column");
+//        target.cppFlags.add("-W4");
+//        target.cppFlags.add("/wd 4514");
+//        target.cppFlags.add("/wd 4820");
+//        target.cppFlags.add("/wd 4127");
+//        target.cppFlags.add("/wd 4710");
+//        target.cppFlags.add("/wd 4711");
+//        target.cppFlags.add("/wd 4577");
+//        target.cppFlags.add("/wd 4996");
+//        target.cppFlags.add("/wd 4100"); //unreferenced formal parameter
+//        target.cppFlags.add("/wd 4530");
+//        target.cppFlags.add("-Zi");
+//        target.cppFlags.add("-Gm-");
+////        target.cppFlags.add("-Od");
+//        target.cppFlags.add("-Zc:inline");
+//        target.cppFlags.add("-fp:fast");
+//        target.cppFlags.add("-GF");
+//        target.cppFlags.add("-Zc:forScope");
+//        target.cppFlags.add("-Zc:wchar_t");
+//        target.cppFlags.add("-RTCu");
+//        target.cppFlags.add("-GR-");
+//        target.cppFlags.add("-Gd");
+////        target.cppFlags.add("-Oy");
+//        target.cppFlags.add("-MTd");
+//        target.cppFlags.add("-diagnostics:column");
     }
 
-    private static BuildMultiTarget getEmscriptenBuildTarget(String idlPath) {
+    private static BuildMultiTarget getEmscriptenBuildTarget(String cppBuildPath, IDLReader idlReader) {
         BuildMultiTarget multiTarget = new BuildMultiTarget();
 
-//        EmscriptenTarget teaVMTarget = new EmscriptenTarget(idlPath);
-//        teaVMTarget.headerDirs.add("-includesrc/physx/PhysxCustom.h");
-//
-//        teaVMTarget.cppInclude.add("**/src/physx/source/foundation/*.cpp");
-//        teaVMTarget.cppInclude.add("**/src/physx/source/foundation/unix/*.cpp");
-//
-//        teaVMTarget.cppFlags.add("-D");
-//        teaVMTarget.cppFlags.add("__EMSCRIPTEN__");
-//        teaVMTarget.cppFlags.add("-D");
-//        teaVMTarget.cppFlags.add("PX_EMSCRIPTEN");
-//
-//        addIncludeDirs(teaVMTarget);
-//        addFlags(teaVMTarget);
-//
-//        teaVMTarget.cppInclude.add("**/src/physx/source/common/src/*.cpp");
-//        teaVMTarget.cppInclude.add("**/src/physx/source/lowlevel/software/src/**.cpp");
-//        teaVMTarget.cppInclude.add("**/src/physx/source/lowlevel/common/src/**.cpp");
-//        teaVMTarget.cppInclude.add("**/src/physx/source/lowlevel/software/src/**.cpp");
-//        teaVMTarget.cppInclude.add("**/src/physx/source/lowlevelaabb/src/**.cpp");
-//        teaVMTarget.cppInclude.add("**/src/physx/source/lowleveldynamics/src/**.cpp");
-//        teaVMTarget.cppInclude.add("**/src/physx/source/scenequery/src/**.cpp");
-//        teaVMTarget.cppInclude.add("**/src/physx/source/simulationcontroller/src/**.cpp");
-//        teaVMTarget.cppInclude.add("**/src/physx/source/pvd/src/**.cpp");
-//        teaVMTarget.cppInclude.add("**/src/physx/source/physx/src/*.cpp");
-//        teaVMTarget.cppInclude.add("**/src/physx/source/physx/src/omnipvd/**.cpp");
-//        teaVMTarget.cppInclude.add("**/src/physx/source/physx/src/gpu/**.cpp");
-//        teaVMTarget.cppInclude.add("**/src/physx/source/physx/src/device/linux/**.cpp");
-//
-//        multiTarget.add(teaVMTarget);
+        boolean buildLibrary = false;
+
+        if(buildLibrary) {
+            // TARGET FOUNDATION
+
+            EmscriptenTarget foundationTarget = new EmscriptenTarget(idlReader);
+            foundationTarget.isStatic = true;
+            foundationTarget.libName = "foundation";
+            addIncludes(foundationTarget);
+            foundationTarget.cppFlags.add("-D");
+            foundationTarget.cppFlags.add("PhysXFoundation_EXPORTS");
+            foundationTarget.cppInclude.add("**/src/physx/source/foundation/*.cpp");
+            multiTarget.add(foundationTarget);
+
+            // TARGET COMMON
+
+            EmscriptenTarget commonTarget = new EmscriptenTarget(idlReader);
+            commonTarget.isStatic = true;
+            commonTarget.libName = "common";
+            addIncludes(commonTarget);
+            commonTarget.cppInclude.add("**/src/physx/source/common/src/*.cpp");
+            commonTarget.cppInclude.add("**/src/physx/source/geomutils/src/**.cpp");
+            commonTarget.cppFlags.add("-D");
+            commonTarget.cppFlags.add("PhysXCommon_EXPORTS");
+            multiTarget.add(commonTarget);
+
+            // TARGET COOKING
+
+            EmscriptenTarget cookingTarget = new EmscriptenTarget(idlReader);
+            cookingTarget.isStatic = true;
+            cookingTarget.libName = "cooking";
+            addIncludes(cookingTarget);
+            cookingTarget.cppInclude.add("**/src/physx/source/physxcooking/src/*.cpp");
+            multiTarget.add(cookingTarget);
+
+            // TARGET TASK
+
+            EmscriptenTarget taskTarget = new EmscriptenTarget(idlReader);
+            taskTarget.isStatic = true;
+            taskTarget.libName = "task";
+            addIncludes(taskTarget);
+            taskTarget.cppInclude.add("**/src/physx/source/task/src/*.cpp");
+            multiTarget.add(taskTarget);
+
+            // TARGET FAST XML
+
+            EmscriptenTarget fastXMLTarget = new EmscriptenTarget(idlReader);
+            fastXMLTarget.isStatic = true;
+            fastXMLTarget.libName = "fastxml";
+            addIncludes(fastXMLTarget);
+            fastXMLTarget.cppInclude.add("**/src/physx/source/fastxml/src/*.cpp");
+            multiTarget.add(fastXMLTarget);
+
+            // TARGET EXTENSIONS
+
+            EmscriptenTarget extensionsTarget = new EmscriptenTarget(idlReader);
+            extensionsTarget.isStatic = true;
+            extensionsTarget.libName = "extensions";
+            addIncludes(extensionsTarget);
+            extensionsTarget.cppInclude.add("**/src/physx/source/physxextensions/**.cpp");
+            extensionsTarget.cppInclude.add("**/src/physx/source/physxmetadata/extensions/src/*.cpp");
+            extensionsTarget.cppInclude.add("**/src/physx/source/physxmetadata/core/src/*.cpp");
+
+            //Web dont have gpu so we remove this class
+            extensionsTarget.cppExclude.add("**/src/physx/source/physxextensions/src/ExtParticleExt.cpp");
+            extensionsTarget.cppExclude.add("**/src/physx/source/physxextensions/src/ExtParticleClothCooker.cpp");
+            multiTarget.add(extensionsTarget);
+
+            // TARGET VEHICLE
+
+            EmscriptenTarget vehicleTarget = new EmscriptenTarget(idlReader);
+            vehicleTarget.isStatic = true;
+            vehicleTarget.libName = "vehicle";
+            addIncludes(vehicleTarget);
+            vehicleTarget.cppInclude.add("**/src/physx/source/physxvehicle/**.cpp");
+            multiTarget.add(vehicleTarget);
+
+            // TARGET VEHICLE 2
+
+            EmscriptenTarget vehicle2Target = new EmscriptenTarget(idlReader);
+            vehicle2Target.isStatic = true;
+            vehicle2Target.libName = "vehicle2";
+            addIncludes(vehicle2Target);
+            vehicle2Target.cppInclude.add("**/src/physx/source/physxvehicle2/**.cpp");
+            multiTarget.add(vehicle2Target);
+
+            // TARGET LOWLEVEL
+
+            EmscriptenTarget lowLevelTarget = new EmscriptenTarget(idlReader);
+            lowLevelTarget.isStatic = true;
+            lowLevelTarget.libName = "lowlevel";
+            addIncludes(lowLevelTarget);
+            lowLevelTarget.cppInclude.add("**/src/physx/source/lowlevel/software/src/**.cpp");
+            lowLevelTarget.cppInclude.add("**/src/physx/source/lowlevel/common/src/**.cpp");
+            lowLevelTarget.cppInclude.add("**/src/physx/source/lowlevel/api/src/**.cpp");
+            multiTarget.add(lowLevelTarget);
+
+            // TARGET LOWLEVELAABB
+
+            EmscriptenTarget lowLevelAABBTarget = new EmscriptenTarget(idlReader);
+            lowLevelAABBTarget.isStatic = true;
+            lowLevelAABBTarget.libName = "lowlevelAABB";
+            addIncludes(lowLevelAABBTarget);
+            lowLevelAABBTarget.cppInclude.add("**/src/physx/source/lowlevelaabb/src/**.cpp");
+            multiTarget.add(lowLevelAABBTarget);
+
+            // TARGET LOWLEVELDYNAMICS
+
+            EmscriptenTarget lowLevelDynamicsTarget = new EmscriptenTarget(idlReader);
+            lowLevelDynamicsTarget.isStatic = true;
+            lowLevelDynamicsTarget.libName = "lowlevelDynamics";
+            addIncludes(lowLevelDynamicsTarget);
+            lowLevelDynamicsTarget.cppInclude.add("**/src/physx/source/lowleveldynamics/src/**.cpp");
+            multiTarget.add(lowLevelDynamicsTarget);
+
+            // TARGET SCENEQUERY
+
+            EmscriptenTarget sceneQueryTarget = new EmscriptenTarget(idlReader);
+            sceneQueryTarget.isStatic = true;
+            sceneQueryTarget.libName = "scenequery";
+            addIncludes(sceneQueryTarget);
+            sceneQueryTarget.cppInclude.add("**/src/physx/source/scenequery/src/**.cpp");
+            multiTarget.add(sceneQueryTarget);
+
+            // TARGET SIMULATIONCONTROLLER
+
+            EmscriptenTarget simulationControllerTarget = new EmscriptenTarget(idlReader);
+            simulationControllerTarget.isStatic = true;
+            simulationControllerTarget.libName = "simulationcontroller";
+            addIncludes(simulationControllerTarget);
+            simulationControllerTarget.cppInclude.add("**/src/physx/source/simulationcontroller/src/**.cpp");
+            multiTarget.add(simulationControllerTarget);
+
+            // TARGET PHYSXPVDSDK
+
+            EmscriptenTarget physXPvdSDKTarget = new EmscriptenTarget(idlReader);
+            physXPvdSDKTarget.isStatic = true;
+            physXPvdSDKTarget.libName = "pvd";
+            addIncludes(physXPvdSDKTarget);
+            physXPvdSDKTarget.cppInclude.add("**/src/physx/source/pvd/src/**.cpp");
+            multiTarget.add(physXPvdSDKTarget);
+
+            // TARGET PHYSX
+
+            EmscriptenTarget physxTarget = new EmscriptenTarget(idlReader);
+            physxTarget.isStatic = true;
+            physxTarget.libName = "core";
+            addIncludes(physxTarget);
+            physxTarget.cppInclude.add("**/src/physx/source/physx/src/*.cpp");
+            physxTarget.cppInclude.add("**/src/physx/source/physx/src/omnipvd/**.cpp");
+            physxTarget.cppInclude.add("**/src/physx/source/physx/src/gpu/**.cpp");
+            physxTarget.cppInclude.add("**/src/physx/source/physx/src/device/linux/**.cpp");
+            physxTarget.cppInclude.add("**/src/physx/source/physxmetadata/core/src/*.cpp");
+            multiTarget.add(physxTarget);
+        }
+
+        EmscriptenTarget teaVMTarget = new EmscriptenTarget(idlReader);
+        teaVMTarget.headerDirs.add("-includesrc/physx/PhysxCustom.h");
+
+        teaVMTarget.cppFlags.add("-D");
+        teaVMTarget.cppFlags.add("__EMSCRIPTEN__");
+        teaVMTarget.cppFlags.add("-D");
+        teaVMTarget.cppFlags.add("PX_EMSCRIPTEN");
+
+        addIncludeDirs(teaVMTarget);
+        addFlags(teaVMTarget);
+
+        teaVMTarget.linkerFlags.add(cppBuildPath + "/libs/emscripten/core.a");
+        teaVMTarget.linkerFlags.add(cppBuildPath + "/libs/emscripten/common.a");
+        teaVMTarget.linkerFlags.add(cppBuildPath + "/libs/emscripten/fastxml.a");
+        teaVMTarget.linkerFlags.add(cppBuildPath + "/libs/emscripten/task.a");
+        teaVMTarget.linkerFlags.add(cppBuildPath + "/libs/emscripten/extensions.a");
+        teaVMTarget.linkerFlags.add(cppBuildPath + "/libs/emscripten/foundation.a");
+        teaVMTarget.linkerFlags.add(cppBuildPath + "/libs/emscripten/lowlevel.a");
+        teaVMTarget.linkerFlags.add(cppBuildPath + "/libs/emscripten/lowlevelAABB.a");
+        teaVMTarget.linkerFlags.add(cppBuildPath + "/libs/emscripten/lowlevelDynamics.a");
+        teaVMTarget.linkerFlags.add(cppBuildPath + "/libs/emscripten/pvd.a");
+        teaVMTarget.linkerFlags.add(cppBuildPath + "/libs/emscripten/scenequery.a");
+        teaVMTarget.linkerFlags.add(cppBuildPath + "/libs/emscripten/simulationcontroller.a");
+        teaVMTarget.linkerFlags.add(cppBuildPath + "/libs/emscripten/vehicle.a");
+        teaVMTarget.linkerFlags.add(cppBuildPath + "/libs/emscripten/vehicle2.a");
+        teaVMTarget.linkerFlags.add(cppBuildPath + "/libs/emscripten/cooking.a");
+
+        multiTarget.add(teaVMTarget);
+
         return multiTarget;
     }
 

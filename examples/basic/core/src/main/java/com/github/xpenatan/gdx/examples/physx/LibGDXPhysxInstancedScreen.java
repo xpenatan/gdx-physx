@@ -46,6 +46,7 @@ import physx.PxSceneDesc;
 import physx.PxShape;
 import physx.PxShapeFlagEnum;
 import physx.PxShapeFlags;
+import physx.PxSimulationFilterShader;
 import physx.PxTopLevelFunctions;
 import physx.common.PxTolerancesScale;
 import physx.extensions.PxDefaultAllocator;
@@ -56,6 +57,7 @@ import physx.foundation.PxQuat;
 import physx.foundation.PxTransform;
 import physx.foundation.PxVec3;
 import physx.geometry.PxBoxGeometry;
+import physx.task.PxCpuDispatcher;
 
 public class LibGDXPhysxInstancedScreen implements Screen {
 
@@ -92,32 +94,32 @@ public class LibGDXPhysxInstancedScreen implements Screen {
 
 
     // PhysX version stuff
-    int version = PxTopLevelFunctions.PHYSICS_VERSION();
-    int versionMajor = version >> 24;
-    int versionMinor = (version >> 16) & 0xff;
-    int versionMicro = (version >> 8) & 0xff;
+    int version;
+    int versionMajor;
+    int versionMinor;
+    int versionMicro;
 
     // PhysX varibales
 
     // create PhysX foundation object
-    private PxDefaultAllocator allocator = new PxDefaultAllocator();
-    private PxDefaultErrorCallback errorCb = new PxDefaultErrorCallback();
-    private PxFoundation foundation = PxTopLevelFunctions.CreateFoundation(version, allocator, errorCb);
+    private PxDefaultAllocator allocator;
+    private PxDefaultErrorCallback errorCb;
+    private PxFoundation foundation;
 
     // create PhysX main physics object
-    private PxTolerancesScale tolerances = new PxTolerancesScale();
-    private PxSceneDesc sceneDesc = new PxSceneDesc(tolerances);
-    private PxPhysics physics = PxTopLevelFunctions.CreatePhysics(version, foundation, tolerances);
-    private PxScene physxScene = physics.createScene(sceneDesc);
+    private PxTolerancesScale tolerances;
+    private PxSceneDesc sceneDesc;
+    private PxPhysics physics;
+    private PxScene physxScene;
 
     // create the CPU dispatcher, can be shared among multiple scenes
     private int numThreads = 4;
-    private PxDefaultCpuDispatcher cpuDispatcher = PxTopLevelFunctions.DefaultCpuDispatcherCreate(numThreads);
+    private PxDefaultCpuDispatcher cpuDispatcher;
 
     // create a default material
-    private PxMaterial physxMaterial = physics.createMaterial(0.5f, 0.5f, 0.5f);
+    private PxMaterial physxMaterial;
     // create default simulation shape flags
-    private PxShapeFlags shapeFlags = new PxShapeFlags((byte) (PxShapeFlagEnum.eSIMULATION_SHAPE));
+    private PxShapeFlags shapeFlags;
 
     // Ground
     private PxBoxGeometry groundGeometry;
@@ -130,7 +132,7 @@ public class LibGDXPhysxInstancedScreen implements Screen {
     private PxBoxGeometry wallGeometry;
 
     // Temp variables
-    private PxTransform tmpPose = new PxTransform(PxIDENTITYEnum.PxIdentity);
+    private PxTransform tmpPose;
     private PxFilterData tmpFilterData;
     private PxVec3 tmpVec;
 
@@ -406,9 +408,9 @@ public class LibGDXPhysxInstancedScreen implements Screen {
         rigidDynamic.setPointer(cPointer);
         rigidDynamic.attachShape(wallShape);
         rigidDynamic.setMass(WALLMASS);
-        rigidDynamic.putToSleep();
         wallRigidObjects.add(rigidDynamic);
         physxScene.addActor(rigidDynamic);
+        rigidDynamic.putToSleep();
 
         // create matrix transform
         mat4.set(position, q);
@@ -481,23 +483,54 @@ public class LibGDXPhysxInstancedScreen implements Screen {
     }
 
     private void initPhysics() {
-        System.out.printf("PhysX loaded, version: %d.%d.%d\n", versionMajor, versionMinor, versionMicro);
-        tmpVec = new PxVec3(0f, -9.8f, 0f);
+        version = PxTopLevelFunctions.PHYSICS_VERSION();
+        versionMajor = version >> 24;
+        versionMinor = (version >> 16) & 0xff;
+        versionMicro = (version >> 8) & 0xff;
+        System.out.println("PhysX loaded, version: " + versionMajor + "." + versionMinor + "." + versionMicro);
 
-        // create a physics scene
+        tmpVec = new PxVec3();
+        tmpFilterData = new PxFilterData();
+        tmpPose = new PxTransform();
+
+        allocator = new PxDefaultAllocator();
+        errorCb = new PxDefaultErrorCallback();
+        foundation = PxTopLevelFunctions.CreateFoundation(version, allocator, errorCb);
+
+        // create PhysX main physics object
+        tolerances = new PxTolerancesScale();
+        physics = PxTopLevelFunctions.CreatePhysics(version, foundation, tolerances);
+
+        cpuDispatcher = PxTopLevelFunctions.DefaultCpuDispatcherCreate(0);
+
+        sceneDesc = new PxSceneDesc(tolerances);
+        tmpVec.x(0);
+        tmpVec.y(-9.8f);
+        tmpVec.z(0);
         sceneDesc.gravity(tmpVec);
         sceneDesc.cpuDispatcher(cpuDispatcher);
-        sceneDesc.filterShader(PxTopLevelFunctions.DefaultFilterShader());
+        PxSimulationFilterShader pxSimulationFilterShader = PxTopLevelFunctions.DefaultFilterShader();
+        sceneDesc.filterShader(pxSimulationFilterShader);
         physxScene = physics.createScene(sceneDesc);
+
+        // create a default material
+        physxMaterial = physics.createMaterial(0.5f, 0.5f, 0.5f);
+        // create default simulation shape flags
+        shapeFlags = new PxShapeFlags((byte) (PxShapeFlagEnum.eSIMULATION_SHAPE));
+
+        tmpPose = new PxTransform(PxIDENTITYEnum.PxIdentity);
 
         tmpVec.x(100f); tmpVec.y(-1f); tmpVec.z(100f);
         tmpPose.p(tmpVec);
-        tmpFilterData = new PxFilterData(1, 1, 0, 0);
 
         // create a large static box for ground
         groundGeometry = new PxBoxGeometry(200f, 1f, 200f);   // PxBoxGeometry uses half-sizes
         groundShape = physics.createShape(groundGeometry, physxMaterial, true, shapeFlags);
         ground = physics.createRigidStatic(tmpPose);
+        tmpFilterData.word0(1);
+        tmpFilterData.word1(1);
+        tmpFilterData.word2(0);
+        tmpFilterData.word3(0);
         groundShape.setSimulationFilterData(tmpFilterData);
         ground.attachShape(groundShape);
         physxScene.addActor(ground);

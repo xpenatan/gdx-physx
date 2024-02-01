@@ -467,7 +467,7 @@ interface PxActor {
     PxActorTypeEnum getType();
     PxScene getScene();
     void setName([Const] DOMString name);
-    [Const] IDLString getName();
+    [Const, Value] IDLString getName();
     [Value] PxBounds3 getWorldBounds(optional float inflation);
     void setActorFlag(PxActorFlagEnum flag, boolean value);
     void setActorFlags([Ref] PxActorFlags flags);
@@ -667,7 +667,7 @@ interface PxArticulationReducedCoordinate {
     unsigned long getNbLinks();
     unsigned long getNbShapes();
     void setName([Const] DOMString name);
-    [Const] IDLString getName();
+    [Const, Value] IDLString getName();
     [Value] PxBounds3 getWorldBounds(optional float inflation);
     PxAggregate getAggregate();
     void setArticulationFlags([Ref] PxArticulationFlags flags);
@@ -801,7 +801,7 @@ interface PxBVH34MidphaseDesc {
 [Prefix="physx::", NoDelete]
 interface PxBase {
     void release();
-    [Const] IDLString getConcreteTypeName();
+    [Const, Value] IDLString getConcreteTypeName();
     long getConcreteType();
     void setBaseFlag(PxBaseFlagEnum flag, boolean value);
     void setBaseFlags([Ref] PxBaseFlags inFlags);
@@ -1643,7 +1643,7 @@ interface PxJoint {
     float getInvMassScale1();
     PxConstraint getConstraint();
     void setName([Const] DOMString name);
-    [Const] IDLString getName();
+    [Const, Value] IDLString getName();
     PxScene getScene();
 //    attribute VoidPtr userData;
 };
@@ -2436,7 +2436,7 @@ interface PxShape {
     [Value] PxShapeFlags getFlags();
     boolean isExclusive();
     void setName([Const] DOMString name);
-    [Const] IDLString getName();
+    [Const, Value] IDLString getName();
     void setLocalPose([Const, Ref] PxTransform pose);
     [Value] PxTransform getLocalPose();
     void setSimulationFilterData([Const, Ref] PxFilterData data);

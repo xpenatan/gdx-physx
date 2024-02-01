@@ -9,6 +9,7 @@ public class TeaVMLauncher {
         config.width = 0;
         config.height = 0;
         config.showDownloadLogs = true;
+        config.useGL30 = true;
         new TeaApplication(new PhysxGame(), config);
     }
 }
