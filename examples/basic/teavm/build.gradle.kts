@@ -11,9 +11,11 @@ val mainClassName = "com.github.xpenatan.gdx.examples.physx.Build"
 
 dependencies {
     implementation(project(":examples:basic:core"))
+    implementation(project(":physx:teavm"))
+
     implementation("com.badlogicgames.gdx:gdx:${LibExt.gdxVersion}")
     implementation("com.github.xpenatan.gdx-teavm:backend-teavm:${LibExt.gdxTeaVMVersion}")
-    implementation(project(":physx:teavm"))
+    implementation("com.github.xpenatan.gdx-imgui:imgui-ext-teavm:${LibExt.gdxImGuiVersion}")
 }
 
 tasks.register<JavaExec>("buildExample") {

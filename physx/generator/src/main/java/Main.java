@@ -58,7 +58,7 @@ public class Main {
 
         JBuilder.build(
                 buildConfig,
-//                getWindowBuildTarget(cppBuildPath),
+//                getWindowBuildTarget(cppBuildPath)
                 getEmscriptenBuildTarget(cppBuildPath, idlReader)
 //                getAndroidBuildTarget()
         );
@@ -350,7 +350,7 @@ public class Main {
 //        target.cppFlags.add("/wd 4530");
 //        target.cppFlags.add("-Zi");
 //        target.cppFlags.add("-Gm-");
-////        target.cppFlags.add("-Od");
+//        target.cppFlags.add("-Od");
 //        target.cppFlags.add("-Zc:inline");
 //        target.cppFlags.add("-fp:fast");
 //        target.cppFlags.add("-GF");
@@ -359,7 +359,7 @@ public class Main {
 //        target.cppFlags.add("-RTCu");
 //        target.cppFlags.add("-GR-");
 //        target.cppFlags.add("-Gd");
-////        target.cppFlags.add("-Oy");
+//        target.cppFlags.add("-Oy");
 //        target.cppFlags.add("-MTd");
 //        target.cppFlags.add("-diagnostics:column");
     }
@@ -367,7 +367,7 @@ public class Main {
     private static BuildMultiTarget getEmscriptenBuildTarget(String cppBuildPath, IDLReader idlReader) {
         BuildMultiTarget multiTarget = new BuildMultiTarget();
 
-        boolean buildLibrary = true;
+        boolean buildLibrary = false;
 
         if(buildLibrary) {
             // TARGET FOUNDATION

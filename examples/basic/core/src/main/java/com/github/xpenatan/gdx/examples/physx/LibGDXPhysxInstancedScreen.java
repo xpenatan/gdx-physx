@@ -87,7 +87,7 @@ public class LibGDXPhysxInstancedScreen implements Screen {
     private static float CULLING_FACTOR;                            // distance from camera
     private static final float WALLMASS = 1;	                    // wall box mass
     private static final float WBOXSIZE = 1;		                // size of wall boxes
-    private static final int   WALLWIDTH = 20;		                // width of wall <<< increase for more boxes
+    private static final int   WALLWIDTH = 50;		                // width of wall <<< increase for more boxes
     private static final int   WALLHEIGHT = WALLWIDTH;		        // height of wall
     private static final float FORCEFACTOR = WALLHEIGHT * WALLWIDTH;  // force factor of explosion
     private static int INSTANCE_COUNT = WALLWIDTH * WALLHEIGHT;
@@ -98,8 +98,6 @@ public class LibGDXPhysxInstancedScreen implements Screen {
     int versionMajor;
     int versionMinor;
     int versionMicro;
-
-    // PhysX varibales
 
     // create PhysX foundation object
     private PxDefaultAllocator allocator;
@@ -404,13 +402,12 @@ public class LibGDXPhysxInstancedScreen implements Screen {
         wallShape.setSimulationFilterData(tmpFilterData);
         PxRigidDynamic r = physics.createRigidDynamic(tmpPose);
         long cPointer = r.getCPointer();
-        PxRigidDynamic rigidDynamic = new PxRigidDynamic((byte)1, '0');
-        rigidDynamic.setPointer(cPointer);
-        rigidDynamic.attachShape(wallShape);
-        rigidDynamic.setMass(WALLMASS);
-        wallRigidObjects.add(rigidDynamic);
-        physxScene.addActor(rigidDynamic);
-        rigidDynamic.putToSleep();
+        r.setPointer(cPointer);
+        r.attachShape(wallShape);
+        r.setMass(WALLMASS);
+        wallRigidObjects.add(r);
+        physxScene.addActor(r);
+        r.putToSleep();
 
         // create matrix transform
         mat4.set(position, q);

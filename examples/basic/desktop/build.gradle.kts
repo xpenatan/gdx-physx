@@ -7,6 +7,7 @@ dependencies {
     implementation(project(":examples:basic:core"))
     implementation("com.badlogicgames.gdx:gdx-platform:${LibExt.gdxVersion}:natives-desktop")
     implementation("com.badlogicgames.gdx:gdx-backend-lwjgl3:${LibExt.gdxVersion}")
+    implementation("com.github.xpenatan.gdx-imgui:imgui-ext-desktop:${LibExt.gdxImGuiVersion}")
 
     // gdx-teavm Version
     implementation(project(":physx:desktop"))
