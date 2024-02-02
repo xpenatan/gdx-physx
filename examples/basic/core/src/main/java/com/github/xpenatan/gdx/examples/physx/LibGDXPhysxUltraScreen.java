@@ -12,10 +12,15 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.decals.CameraGroupStrategy;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
+import com.badlogic.gdx.graphics.g3d.utils.FirstPersonCameraController;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.github.xpenatan.gdx.examples.imgui.ImGuiRenderer;
+import imgui.ImGui;
+import imgui.idl.helper.IDLBool;
+import imgui.idl.helper.IDLInt;
 import java.util.ArrayList;
 import physx.PxFilterData;
 import physx.PxIDENTITYEnum;
@@ -38,7 +43,7 @@ import physx.foundation.PxTransform;
 import physx.foundation.PxVec3;
 import physx.geometry.PxBoxGeometry;
 
-public class LibGDXPhysxUltraScreen implements Screen {
+public class LibGDXPhysxUltraScreen extends ImGuiRenderer {
 
     private TextureRegion firstWallTexture;
     private TextureRegion[] boxTextures;
@@ -53,9 +58,9 @@ public class LibGDXPhysxUltraScreen implements Screen {
     // some constants
     private static final float WALLMASS = 1;	            // wall box mass
     private static final float WBOXSIZE = 1;		        // size of wall boxes
-    private static final int   WALLWIDTH = 50;		        // width of wall
-    private static final int   WALLHEIGHT = WALLWIDTH;		        // height of wall
-    private static final float FORCEFACTOR = WALLHEIGHT*WALLWIDTH;  // force factor of explosion
+    private static int   WALLWIDTH = 50;		        // width of wall
+    private static int   WALLHEIGHT = WALLWIDTH;		        // height of wall
+    private static float FORCEFACTOR = WALLHEIGHT*WALLWIDTH;  // force factor of explosion
 
     // PhysX version stuff
     int version = PxTopLevelFunctions.PHYSICS_VERSION();
@@ -101,8 +106,13 @@ public class LibGDXPhysxUltraScreen implements Screen {
     private ArrayList<Decal> wallBoxGameObjects = new ArrayList<>();
     private DecalBatch decalBatch = new DecalBatch(WALLWIDTH*WALLWIDTH + 1, new CameraGroupStrategy(camera));
 
+    private boolean autoPlay = true;
+    private boolean step = true;
+    private FirstPersonCameraController controller;
+
     @Override
     public void show() {
+        super.show();
         System.out.println("PhysX loaded, version: " + versionMajor + "." + versionMinor + "." + versionMicro);
         batch2D = new SpriteBatch();
         font.setColor(Color.RED);
@@ -133,16 +143,51 @@ public class LibGDXPhysxUltraScreen implements Screen {
         physxScene.addActor(ground);
 
         loadAssets();
+
+        controller = new FirstPersonCameraController(camera);
+        controller.setVelocity(20);
+        controller.setDegreesPerPixel(0.1f);
+        Gdx.input.setInputProcessor(controller);
     }
 
     @Override
-    public void render(float delta) {
+    public void renderImGui() {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-
-        doLogic();
-        simLoop();
+        controller.update();
+        if(autoPlay || step) {
+            doLogic();
+        }
+        simLoop(autoPlay || step);
         draw();
+        step = false;
+        renderImGuiDebugWindow();
+    }
+
+    private void renderImGuiDebugWindow() {
+        ImGui.Begin("Debug");
+
+        IDLBool.TMP_1.set(autoPlay);
+
+        if(ImGui.Checkbox("AutoPlay", IDLBool.TMP_1)) {
+            autoPlay = IDLBool.TMP_1.getValue();
+        }
+
+        if(ImGui.InputInt("Wall width", IDLInt.TMP_1.set(WALLWIDTH))) {
+            WALLWIDTH = IDLInt.TMP_1.getValue();
+            WALLHEIGHT = WALLWIDTH;
+            FORCEFACTOR = WALLHEIGHT*WALLWIDTH;
+        }
+
+        if(ImGui.Button("Reset")) {
+            logicIndex = 2;
+            logicTimer = 5;
+        }
+        if(ImGui.Button("Step")) {
+            step = true;
+        }
+
+        ImGui.End();
     }
 
     // libGDX screen logic
@@ -152,8 +197,6 @@ public class LibGDXPhysxUltraScreen implements Screen {
         switch (logicIndex){
             case 0:
                 if (logicTimer > 1.5f){
-//                    zebraTalk.setVolume(1);
-//                    zebraTalk.play();
                     logicIndex = 1;
                     logicTimer = 0;
                 }
@@ -190,11 +233,13 @@ public class LibGDXPhysxUltraScreen implements Screen {
     }
 
     // simulation loop
-    private void simLoop ()  {
+    private void simLoop (boolean update)  {
         startTime = TimeUtils.nanoTime();
 
-        physxScene.simulate(Gdx.graphics.getDeltaTime());
-        physxScene.fetchResults(true);
+        if(update) {
+            physxScene.simulate(Gdx.graphics.getDeltaTime());
+            physxScene.fetchResults(true);
+        }
 
         for(int i = 0; i < wallBoxGameObjects.size(); i++){
             q.set(wallRigidObjects.get(i).getGlobalPose().q().x(),
